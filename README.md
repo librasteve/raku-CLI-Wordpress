@@ -2,11 +2,13 @@
 
 ### _PLEASE EXERCISE CAUTION USING AWSCLI SINCE IT WILL CREATE BILLABLE AWS SERVICES IN YOUR ACCOUNT AND MAY NOT TERMINATE THEM AUTOMATICALLY_
 
-# Raku CLI::AWS::EC2-Simple
+# Raku CLI::Wordpress
 
-This module provide a simple abstraction AWS command line interface for Amazon's EC2 compute web service.
+This module provide a simple abstraction Wordpress command line interface for managing Wordpress installation.
 
-If you encounter a feature of EC2 you want that's not implemented by this module (and there are many), please consider sending a pull request.
+If you encounter a feature of WP cli you want that's not implemented by this module (and there are many), please consider sending a pull request.
+
+vvvv   FIXME
 
 ## Getting Started
 
