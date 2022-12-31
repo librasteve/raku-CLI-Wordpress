@@ -1,0 +1,10 @@
+use v6.d;
+use Test;
+
+use CLI::AWS::EC2-Simple;
+
+plan 1;
+
+ok Config.new, 'did Config get imported?';
+
+#done-testing;
