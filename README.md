@@ -4,39 +4,31 @@
 
 # Raku CLI::Wordpress
 
-This module provide a simple abstraction Wordpress command line interface for managing Wordpress installation.
+This module provides a simple abstraction to the Wordpress command line interface (wpcli) for managing Wordpress installation.
 
-If you encounter a feature of WP cli you want that's not implemented by this module (and there are many), please consider sending a pull request.
-
-vvvv   FIXME
+If you encounter a feature of wpcli you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
 ## Getting Started
 
-- apt-get update && apt-get install aws-cli
-- aws configure _[enter your config here]_
-- zef install CLI::AWS::EC2-Simple
-- raws-ec2 _[enter your commands here]_
+- zef install CLI::Wordpress
+- rawp _[enter your commands here]_
 
 ## Usage
 
 ```
-./raws-ec2 [--id=<Str>] [--nsu] [--eip] [-y] <cmd>
+./rawp <cmd>
   
-    <cmd>         One of <list launch setup connect state terminate nuke>
-    --id=<Str>    Running InstanceId of form 'i-0785d8bd98b5f458b'
-    --nsu         No setup (suppress launch from running setup)
-    --eip         Allocates (if needed) and Associates Elastic IP
-    -y            Silence confirmation <nuke> cmd only
+    <cmd>         One of <launch start stop connect terminate>
 ```
 
-Will make an (e.g.) ```MyKeyPair1672164025.pem``` from your credentials in your $*HOME dir
+iamerejh
 
 ## Config
 
-```launch``` reads ```aws-ec2-launch.yaml``` which is preloaded with the standard AWS Canonical, Ubuntu, 22.04 LTS, amd64 jammy image build on 2022-12-01.
+```launch``` reads ```wordpress-launch.yaml```.
 Edit this yaml file to meet your needs...
 
-- cat .raws-config/aws-ec2-launch.yaml 
+- cat .rawp-config/wordpress-launch.yaml 
 
 ```
 instance:
