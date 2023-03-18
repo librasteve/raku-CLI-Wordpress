@@ -1,12 +1,17 @@
 [![License: Artistic-2.0](https://img.shields.io/badge/License-Artistic%202.0-0298c3.svg)](https://opensource.org/licenses/Artistic-2.0)
 
-### _PLEASE EXERCISE CAUTION USING AWSCLI SINCE IT WILL CREATE BILLABLE AWS SERVICES IN YOUR ACCOUNT AND MAY NOT TERMINATE THEM AUTOMATICALLY_
-
 # Raku CLI::Wordpress
 
 This module provides a simple abstraction to the Wordpress command line interface (wpcli) for managing Wordpress installation.
 
 If you encounter a feature of wpcli you want that's not implemented by this module (and there are many), please consider sending a pull request.
+
+## Design
+
+- clone rawp to target
+‘’’sudo git clone https://github.com/p6steve/raku-CLI-Wordpress.git’’’
+
+
 
 ## Getting Started
 
