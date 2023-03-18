@@ -9,7 +9,8 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 ## Design
 
 - clone rawp to target
-‘’’sudo git clone https://github.com/p6steve/raku-CLI-Wordpress.git’’’
+```sudo git clone https://github.com/p6steve/raku-CLI-Wordpress.git```
+
 
 
 
