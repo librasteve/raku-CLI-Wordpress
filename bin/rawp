@@ -1,9 +1,7 @@
 ##!/usr/bin/env raku
-#`[
-use lib '../lib';
-#use CLI::AWS::EC2-Simple;
 
-# first go `aws configure` to populate $HOME/.aws/credentials
+use lib '../lib';
+use CLI::Wordpress;
 
 enum Command <list launch setup connect state terminate nuke>;
 
@@ -17,6 +15,7 @@ sub MAIN(
 ) {
     say $cmd;
 
+    #`[
     my $s = Session.new;
 
     sub focus-id {
@@ -80,6 +79,7 @@ sub MAIN(
             }
         }
     }
+    #]
 }
-#]
+
 
