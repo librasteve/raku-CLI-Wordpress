@@ -41,7 +41,7 @@ Edit this yaml file to meet your needs...
 
 - cat .rawp-config/wordpress-launch.yaml 
 
-```
+```yaml
 instance:
     image: 'ami-0f540e9f488cfa27d'
     type: 't2.micro'
@@ -74,23 +74,5 @@ instance:
 `sudo apt-get install docker-compose -y`;
 ```
 
-## Wordpress Deploy & Control
-
-[This section will probably go into raku-CLI-WP-Simple]
-
-viz. [digital ocean howto](https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose#step-3-defining-services-with-docker-compose)
-
-- client script 'raku-wp --launch'
-
-
-## NOTES
-
-- unassigned Elastic IPs are chargeable ($5 per month ish), may be better to run one free tier instance
-- rules about rules
-  - will always open port 22 (SSH) inbound from this client IP
-  - will re-use the existing named Security Group (or create if not present)
-  - only inbound are supported for now 
-  -  if you want to keep the name and change the rules, then delete via the aws console
-
 ### Copyright
-copyright(c) 2022 Henley Cloud Consulting Ltd.
+copyright(c) 2023 Henley Cloud Consulting Ltd.
