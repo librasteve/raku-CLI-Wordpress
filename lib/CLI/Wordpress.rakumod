@@ -1,10 +1,14 @@
-unit module CLI::AWS::EC2-Simple:ver<0.0.3>:auth<Steve Roe (p6steve@furnival.net)>;
+unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (p6steve@furnival.net)>;
 
 use YAMLish;
 use JSON::Fast;
 # first go `aws configure` to populate $HOME/.aws/credentials
 
 my $et = time;      # for unique names
+
+say 'yo';
+
+#`[
 
 my %config-yaml := load-yaml("$*HOME/.raws-config/aws-ec2-launch.yaml".IO.slurp);   # only once
 my $setup-text := "$*HOME/.raws-config/setup.pl".IO.slurp;
@@ -275,4 +279,5 @@ class Instance is export {
         say "done!";
     }
 }
+#]
 
