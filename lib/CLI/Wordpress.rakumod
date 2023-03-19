@@ -8,8 +8,8 @@ my $et = time;      # for unique names
 
 say 'yo';
 
-my %config-yaml := load-yaml("$*HOME/.raws-config/aws-ec2-launch.yaml".IO.slurp);   # only once
-my $setup-text := "$*HOME/.raws-config/setup.pl".IO.slurp;
+my %config-yaml := load-yaml("$*HOME/.rawp-config/aws-ec2-launch.yaml".IO.slurp);   # only once
+my $setup-text := "$*HOME/.rawp-config/setup.pl".IO.slurp;
 
 class Config is export {
     has %.y; 
