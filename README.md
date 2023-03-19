@@ -17,11 +17,9 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 - qqx stages
 
 
-
-
 ## Getting Started
 
-- zef install CLI::Wordpress
+- zef install https://github.com/p6steve/raku-CLI-Wordpress.git _[or CLI::Wordpress]_
 - rawp _[enter your commands here]_
 
 ## Usage

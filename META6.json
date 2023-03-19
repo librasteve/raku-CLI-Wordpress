@@ -1,7 +1,7 @@
 {
-  "name": "CLI::AWS::EC2-Simple",
-  "description": "Simple AWS EC2 CLI command",
-  "version": "0.0.3",
+  "name": "CLI::Wordpress",
+  "description": "Simple wpcli command",
+  "version": "0.0.1",
   "perl": "6.d",
   "authors": [
     "p6steve"
@@ -14,15 +14,15 @@
   "build-depends": [],
   "test-depends": [],
   "provides": {
-    "CLI::AWS::EC2-Simple": "lib/CLI/AWS/EC2-Simple.rakumod"
+    "CLI::Wordpress": "lib/CLI/Wordpress.rakumod"
   },
   "resources": [],
   "license": "Artistic-2.0",
   "tags": [
-    "AWS",
+    "Wordpress",
     "CLI",
-    "EC2"
+    "wpcli"
   ],
   "api": "1",
-  "source-url": "git://github.com/p6steve/raku-CLI-AWS-EC2-Simple.git"
+  "source-url": "git://github.com/p6steve/raku-CLI-Wordpress.git"
 }
