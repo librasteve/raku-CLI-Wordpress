@@ -1,7 +1,7 @@
 use v6.d;
 use Test;
 
-use CLI::AWS::EC2-Simple;
+use CLI::Wordpress;
 
 plan 1;
 

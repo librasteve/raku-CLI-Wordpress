@@ -8,8 +8,6 @@ my $et = time;      # for unique names
 
 say 'yo';
 
-#`[
-
 my %config-yaml := load-yaml("$*HOME/.raws-config/aws-ec2-launch.yaml".IO.slurp);   # only once
 my $setup-text := "$*HOME/.raws-config/setup.pl".IO.slurp;
 
@@ -28,6 +26,8 @@ class Config is export {
         @!sg-rules := %!y<instance><security-group><rules>;
     }
 }
+
+#`[
 
 class KeyPair {
     has $.dir = "$*HOME";

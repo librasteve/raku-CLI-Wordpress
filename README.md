@@ -19,7 +19,16 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 
 ## Getting Started
 
+NB. this takes forever, should move deps to raws setup.pl
+`zef install MIME::Base64 YAMLish JSON::Fast --/test`
+
+- sudo apt-get update
+- sudo apt-get install libmime-base64-urlsafe-perl
+- zef install MIME::Base64 --/test
+- zef install YAMLish --/test
+- zef install JSON::Fast --/test
 - zef install https://github.com/p6steve/raku-CLI-Wordpress.git _[or CLI::Wordpress]_
+
 - rawp _[enter your commands here]_
 
 ## Usage
