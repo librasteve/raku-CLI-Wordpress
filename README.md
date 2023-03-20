@@ -19,8 +19,14 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 
 ## Getting Started
 
-NB. this takes forever, should move deps to raws setup.pl
+this takes forever, should move deps to raws setup.pl
 `zef install MIME::Base64 YAMLish JSON::Fast --/test`
+iamerejh --- add path /home/ubuntu/.raku/bin
+
+`sudo apt-get install libmime-base64-urlsafe-perl`;
+`zef install MIME::Base64 --/test --verbose`;
+`zef install YAMLish --/test --verbose`;
+`zef install JSON::Fast --/test --verbose`;
 
 - sudo apt-get update
 - sudo apt-get install libmime-base64-urlsafe-perl
