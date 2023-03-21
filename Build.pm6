@@ -82,7 +82,7 @@ END2
 
         
 my $text3 = q:to/END3/;
-version: '3'
+version: "3"
 
 services:
   db:
@@ -94,7 +94,7 @@ services:
       - MYSQL_DATABASE=wordpress
     volumes:
       - dbdata:/var/lib/mysql
-    command: '--default-authentication-plugin=mysql_native_password'
+    command: "--default-authentication-plugin=mysql_native_password"
     networks:
       - app-network
 
