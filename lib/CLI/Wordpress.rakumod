@@ -266,6 +266,8 @@ class Instance is export {
 
         my $promise = $proc.start;
 
+#why no sudo ?
+
         $proc.say("echo 'Hello, World'");
         $proc.say("id");
 
