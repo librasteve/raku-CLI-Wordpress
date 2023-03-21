@@ -11,6 +11,7 @@ class Build {
         chdir 'wordpress';
         mkdir 'nginx-conf';
 
+        #FIXME - just make these random in production
 my $text0 = q:to/END0/;
 MYSQL_ROOT_PASSWORD=boris
 MYSQL_USER=wp_007
