@@ -29,13 +29,14 @@ END1
 
         mkdir 'nginx-conf';
         
-my $text2 = qq:to/END2/;
+my $text2 = q:to/END2/;
 server {
     listen 80;
     listen [::]:80;
 
     #server_name your_domain www.your_domain;
-    server_name $domain-name www.$domain-name;
+    #server_name $domain-name www.$domain-name;
+    server_name furnival.net www.furnival.net;
 
     index index.php index.html index.htm;
 
