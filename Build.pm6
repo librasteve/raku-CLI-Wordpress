@@ -7,6 +7,9 @@ class Build {
         my $admin-email  = 'hccs@furnival.net';
 
         chdir $*HOME;
+        mkdir 'wordpress';
+        chdir 'wordpress';
+        mkdir 'nginx-conf';
 
 my $text0 = q:to/END0/;
 MYSQL_ROOT_PASSWORD=boris
@@ -16,9 +19,6 @@ END0
 
         qqx`echo \'$text0\' > .env`;
 
-        mkdir 'wordpress';
-        chdir 'wordpress';
-
 my $text1 = q:to/END1/;
 .env
 .git
@@ -26,8 +26,6 @@ my $text1 = q:to/END1/;
 END1
 
         qqx`echo \'$text1\' > .gitignore`;
-
-        mkdir 'nginx-conf';
         
 my $text2 = q:to/END2/;
 server {
