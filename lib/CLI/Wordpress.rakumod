@@ -9,21 +9,13 @@ my $et = time;      # for unique names
 say 'yo';
 
 #FIXME - make a yaml
-my %config-yaml := load-yaml("$*HOME/.rawp-config/aws-ec2-launch.yaml".IO.slurp);   # only once
+my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);   # only once
 
 class Config is export {
-    has %.y; 
-    has $.image;
-    has $.type;
-    has $.sg-name = 'MySG';
-    has @.sg-rules;
+    has %.y;
 
     method TWEAK {
-        %!y        := %config-yaml; 
-        $!image    := %!y<instance><image>;
-        $!type     := %!y<instance><type>;
-        $!sg-name  := %!y<instance><security-group><name>;
-        @!sg-rules := %!y<instance><security-group><rules>;
+        %!y        := %config-yaml;
     }
 }
 
