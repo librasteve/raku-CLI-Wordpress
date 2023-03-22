@@ -6,8 +6,6 @@ use JSON::Fast;
 
 my $et = time;      # for unique names
 
-say 'yo';
-
 my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);   # only once
 
 class Config is export {
@@ -24,14 +22,14 @@ class Instance is export {
     method launch {
         say 'staging...';
 
-	#chdir( '/home/ubuntu/wordpress' );
-	chdir( "$*HOME/wordpress" );
+	chdir "$*HOME/wordpress";
 
 	qqx`sudo docker-compose up -d`.say;
 
 	sleep 5;
 	qqx`sudo docker-compose ps`.say;
 
+	#| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`; 
 
 	die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
@@ -39,13 +37,22 @@ class Instance is export {
 	say 'staging OK, now getting cert...';
 	say '[go "zef install ..." again to reset]';
 
-	my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-	
+	my $dc;
+        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
 	$dc ~~ s:g/'--staging'/'--force-renewal'/;
 	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 
 	qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
 
+	qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx-ssl.conf $*HOME/wordpress/nginx-conf/nginx.conf`;
+
+	#| add secure port
+	$dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+	my $new-ports = "- \"80:80\"\n      - \"443:443\"";
+	$dc ~~ s:g/'- "80:80"'/$new-ports/;
+	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+
+	qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
 	#iamerejh
 
     }
