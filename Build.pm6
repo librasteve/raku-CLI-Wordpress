@@ -79,8 +79,13 @@ END2
 
         qqx`echo \'$text2\' > nginx-conf/nginx.conf`;
 
-        
 my $text3 = q:to/END3/;
+
+END3
+
+        qqx`echo \'$text3\' > nginx-conf/nginx-ssl.conf`;
+        
+my $text4 = q:to/END4/;
 version: "3"
 
 services:
@@ -166,15 +171,15 @@ volumes:
 networks:
   app-network:
     driver: bridge
-END3
+END4
 
-        qqx`echo \'$text3\' > docker-compose.yaml`;
+        qqx`echo \'$text4\' > docker-compose.yaml`;
 
         chdir $*HOME;
         mkdir '.rawp-config';
         chdir '.rawp-config';
 
-my $text4 = q:to/END4/;
+my $text4 = q:to/END5/;
 instance:
     image: ami-0f540e9f488cfa27d            # <== the standard, clean AWS Ubuntu
     #image: ami-0c1163e529aeb9b20            # <== AWS Ubuntu plus raws-ec2 setup already applied (use --nsu flag)
@@ -199,9 +204,9 @@ instance:
             - inbound:
                 port: 8888
                 cidr: 0.0.0.0/0
-END4
+END5
 
-        qqx`echo \'$text4\' > wordpress-launch.yaml`;
+        qqx`echo \'$text5\' > wordpress-launch.yaml`;
         
         warn 'Build successful';
         

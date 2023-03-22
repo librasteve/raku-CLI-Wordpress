@@ -7,84 +7,32 @@ This module provides a simple abstraction to the Wordpress command line interfac
 If you encounter a feature of wpcli you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
 ## Design
-
-- clone rawp to target
-```sudo git clone https://github.com/p6steve/raku-CLI-Wordpress.git```
+- install rawp on target
+```sudo zef install https://github.com/p6steve/raku-CLI-Wordpress.git```
 - files
   - docker-compose.yaml 
   - nginx-conf
   - …?
 - qqx stages
 
+###CMDs
+- [ ] launch
+- [x] start ```sudo docker-compose up -d```
+- [x] stop ```sudo docker-compose down```
+- [x] list ```sudo docker-compose ps```
+- [x] connect ```sudo docker exec -it ubuntu_wordpress_1 "/bin/bash"```
+- [x] terminate ```sudo docker compose down -v```  #rm volumes & reset
+- [ ] exec #wpcli cmd
 
 ## Getting Started
-
-this takes forever, should move deps to raws setup.pl
-`zef install MIME::Base64 YAMLish JSON::Fast --/test`
-iamerejh --- add path /home/ubuntu/.raku/bin
-
-`sudo apt-get install libmime-base64-urlsafe-perl`;
-`zef install MIME::Base64 --/test --verbose`;
-`zef install YAMLish --/test --verbose`;
-`zef install JSON::Fast --/test --verbose`;
-
-- sudo apt-get update
-- sudo apt-get install libmime-base64-urlsafe-perl
-- zef install MIME::Base64 --/test
-- zef install YAMLish --/test
-- zef install JSON::Fast --/test
 - zef install https://github.com/p6steve/raku-CLI-Wordpress.git _[or CLI::Wordpress]_
-
 - rawp _[enter your commands here]_
 
 ## Usage
-
 ```
 ./rawp <cmd>
   
     <cmd>         One of <launch start stop connect terminate>
-```
-
-iamerejh
-
-## Config
-
-```launch``` reads ```wordpress-launch.yaml```.
-Edit this yaml file to meet your needs...
-
-- cat .rawp-config/wordpress-launch.yaml 
-
-```yaml
-instance:
-    image: 'ami-0f540e9f488cfa27d'
-    type: 't2.micro'
-    security-group:
-        name: 'MySG'
-        rules:
-            - inbound:
-                port: 80
-                cidr: '0.0.0.0/0'
-            - inbound:
-                port: 443 
-                cidr: '0.0.0.0/0'
-```
-
-## Setup
-
-```setup``` deploys docker, docker-compose, raku and zef to the launchee...
-
-- cat .raws-config/launch.pl
-
-```
-#!/usr/bin/perl
-`sudo apt-get update -y`;
-
-`sudo apt-get install rakudo -y`;
-`sudo git clone https://github.com/ugexe/zef.git`;
-`sudo raku -I./zef zef/bin/zef install ./zef --/test`;
-
-`sudo apt-get install docker -y`;
-`sudo apt-get install docker-compose -y`;
 ```
 
 ### Copyright
