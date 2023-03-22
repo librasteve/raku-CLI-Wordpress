@@ -24,7 +24,8 @@ class Instance is export {
     method launch {
         say 'staging...';
 
-	chdir( '/home/ubuntu/wordpress' );
+	#chdir( '/home/ubuntu/wordpress' );
+	chdir( "$*HOME/wordpress" );
 
 	qqx`sudo docker-compose up -d`.say;
 
@@ -36,7 +37,7 @@ class Instance is export {
 	die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
 
 	say 'staging OK, now getting cert...';
-	say '[go zef install ... again to reset launch]';
+	say '[go "zef install ..." again to reset]';
 
 	my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
 	
