@@ -10,46 +10,18 @@ sub MAIN(
 ) {
     say $cmd;
 
-    #`[
-    my $s = Session.new;
-
-    sub focus-id {
-        if $id {
-            if $id ∈ $s.instance-ids.Set {
-                return $id
-            } else {
-                die "Instance Id $id not found in this Session"
-            }
-        } else {
-            if $s.instance-ids.elems == 1 {
-                return $s.instance-ids[0] 
-            } else {
-                return slurp './.raws-temp'
-            }
-        }
-    }
-
     given $cmd {
-        when 'list' {
-            for $s.instance-ids.sort -> $id {
-                my $i = Instance.new( :$s, :$id );
-                say "$id => {$i.state}";
-            }
-        }
         when 'launch' {
-            if $id  {die 'cannot launch an existing Instance'}
 
-            my $i = Instance.new(:$s);
+            my $i = Instance.new;
             $i.launch;
             
-            spurt './.raws-temp', $i.id;     # remember last one
-
-            if $eip { $i.eip-associate }
-
-            if ! $nsu { $i.setup }
-
-            $i.id.say;
+            dd $i;
         }
+        when 'list' {
+	    say 'ho';
+        }
+    #`[
         when 'state' {
             Instance.new( :$s, id => focus-id ).state.say
         }
@@ -73,8 +45,8 @@ sub MAIN(
                 Instance.new( :$s, :$id ).terminate
             }
         }
-    }
     #]
+    }
 }
 
 

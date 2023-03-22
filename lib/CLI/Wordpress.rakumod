@@ -8,7 +8,6 @@ my $et = time;      # for unique names
 
 say 'yo';
 
-#FIXME - make a yaml
 my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);   # only once
 
 class Config is export {
@@ -41,38 +40,6 @@ class Instance is export {
     }
 
 #`[
-    method describe {
-        qqx`aws ec2 describe-instances --instance-ids $!id`
-        andthen 
-            .&from-json<Reservations>[0]<Instances>[0]
-    }
-
-    method public-dns-name {
-        self.describe<PublicDnsName>
-    }
-
-    method public-ip-address {
-        self.describe<PublicIpAddress>
-    }
-
-    method state {
-        self.describe<State><Name>
-    }
-
-    method wait-until-running {
-        until self.state eq 'running' { 
-            say self.state, '...'; 
-            sleep 5 
-        }
-        say self.state, '...';
-    }
-
-    method eip-associate {
-        self.wait-until-running;
-        say 'associating eip...'; 
-        $!s.eip.associate( :$!id );     # always associate Elastic IP
-    }
-
     method connect {
         self.wait-until-running;
         
