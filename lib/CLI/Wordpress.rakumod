@@ -84,6 +84,38 @@ class Instance is export {
         say 'terminating...';
         qqx`aws ec2 terminate-instances --instance-ids $!id`
     }
+
+    method setup {
+            say "setting up, this can take some minutes (longer if on a t2.micro) please be patient...";
+            self.wait-until-running;
+            sleep 20;       # let instance mellow
+
+            my $dns = self.public-dns-name;
+
+            # since we are changing the host, but keeping the eip, we flush known_hosts
+            qqx`ssh-keygen -f ~/.ssh/known_hosts -R $dns`;
+
+            my $proc = Proc::Async.new(:w, 'ssh', '-tt', '-o', "StrictHostKeyChecking no", '-i', "{$!s.kpn}.pem", "ubuntu@$dns");
+            $proc.stdout.tap({ print "stdout: $^s" });
+            $proc.stderr.tap({ print "stderr: $^s" });
+
+            my $promise = $proc.start;
+
+            $proc.say("echo 'Hello, World'");
+            $proc.say("id");
+
+            $proc.say('export PATH=$PATH:/usr/lib/perl6/site/bin:/home/ubuntu/.raku/bin');
+            $proc.say('echo PATH=$PATH:/usr/lib/perl6/site/bin:/home/ubuntu/.raku/bin >> ~/.bashrc');
+
+            $proc.say("echo \'$setup-text\' > setup.pl");
+            $proc.say('cat setup.pl | perl');
+
+            sleep 5;
+
+            $proc.say("exit");
+            await $promise;
+            say "done!";
+        }
     #]
 }
 
