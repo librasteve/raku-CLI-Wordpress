@@ -22,21 +22,31 @@ class Instance is export {
     has $.c = Config.new;
 
     method launch {
-        say 'launching...';
+        say 'staging...';
 
-        #my @l=qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`; @l[*-1] ~~ /"furnival.net"/.so.say;
+	chdir( '/home/ubuntu/wordpress' );
 
-        #`[
-        my $cmd :=
-            "aws ec2 run-instances " ~
-            "--image-id {$!c.image} " ~
-            "--instance-type {$!c.type} " ~
-            "--key-name {$!s.kpn} " ~
-            "--security-group-ids {$!s.sg.id}";
-            
-        qqx`$cmd` andthen
-            $!id = .&from-json<Instances>[0]<InstanceId>;
-        #]
+	qqx`sudo docker-compose up -d`.say;
+
+	sleep 5;
+	qqx`sudo docker-compose ps`.say;
+
+        my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`; 
+
+	die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
+
+	say 'staging OK, now getting cert...';
+	say '[go zef install ... again to reset launch]';
+
+	my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+	
+	$dc ~~ s:g/'--staging'/'--force-renewal'/;
+	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+
+	qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
+
+	#iamerejh
+
     }
 
 #`[

@@ -12,11 +12,7 @@ sub MAIN(
 
     given $cmd {
         when 'launch' {
-
-            my $i = Instance.new;
-            $i.launch;
-            
-            dd $i;
+            Instance.new.launch
         }
         when 'list' {
 	    say 'ho';
