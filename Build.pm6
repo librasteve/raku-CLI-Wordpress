@@ -179,7 +179,7 @@ END4
         mkdir '.rawp-config';
         chdir '.rawp-config';
 
-my $text4 = q:to/END5/;
+my $text5 = q:to/END5/;
 instance:
     image: ami-0f540e9f488cfa27d            # <== the standard, clean AWS Ubuntu
     #image: ami-0c1163e529aeb9b20            # <== AWS Ubuntu plus raws-ec2 setup already applied (use --nsu flag)
