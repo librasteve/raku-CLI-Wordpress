@@ -10,9 +10,9 @@ class Build {
         warn %?RESOURCES<wordpress>;
         warn $*HOME;
 
-        qqx`mv %?RESOURCES<wordpress> $*HOME`;
+        #qqx`mv %?RESOURCES<wordpress> $*HOME`;
 
-        chdir "$*HOME/wordpress";
+        #chdir "$*HOME/wordpress";
 
         say qqx`pwd`;
 
