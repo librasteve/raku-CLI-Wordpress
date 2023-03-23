@@ -12,7 +12,7 @@ class Build {
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
 
-        copy %?RESOURCES<wordpress/docker-compose.yaml> $*HOME;
+        copy %?RESOURCES<wordpress/docker-compose.yaml>, $*HOME;
 
 
 
