@@ -21,7 +21,7 @@ my $text1 = q:to/END1/;
 END1
 
         qqx`echo \'$text1\' > .gitignore`;
-        
+
 my $text2 = q:to/END2/;
 server {
     listen 80;
@@ -147,7 +147,7 @@ server {
 END3
 
         qqx`echo \'$text3\' > nginx-conf/nginx-ssl.conf`;
-        
+
 my $text4 = q:to/END4/;
 version: "3"
 
@@ -270,10 +270,10 @@ instance:
 END5
 
         qqx`echo \'$text5\' > wordpress-launch.yaml`;
-        
+        #]]
+
         warn 'Build successful';
-        
+
         exit 0
     }
-    #]]
 }
