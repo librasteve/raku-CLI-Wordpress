@@ -12,7 +12,7 @@ class Build {
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
 
-        warn %?RESOURCES<wordpress/docker-compose.yaml>.absolute.say;
+        say %?RESOURCES<wordpress/docker-compose.yaml>.absolute;
         #copy %?RESOURCES<wordpress/docker-compose.yaml>.absolute, $*HOME;
 
 
