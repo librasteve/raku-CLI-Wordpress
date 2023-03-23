@@ -152,7 +152,7 @@ server {
 }
 END3
 
-        qqx`echo \'$text3\' > nginx-conf/nginx-ssl.conf`;
+        qqx`echo \'$text3\' > nginx-conf/nginx.ssl`;
 
 my $text4 = q:to/END4/;
 version: "3"
