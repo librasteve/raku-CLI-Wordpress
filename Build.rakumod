@@ -11,15 +11,8 @@ class Build {
         chdir $*HOME;
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
+        chdir 'wordpress';
 
-        my $foo = %?RESOURCES<wordpress/docker-compose.yaml>.absolute;
-        copy( $foo, "$*HOME/wordpress");
-
-
-
-        say qqx`pwd`;
-
-        #`[[
 my $text1 = q:to/END1/;
 .env
 .git
@@ -276,7 +269,6 @@ instance:
 END5
 
         qqx`echo \'$text5\' > wordpress-launch.yaml`;
-        #]]
 
         warn 'Build successful';
 

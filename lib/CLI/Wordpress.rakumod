@@ -22,8 +22,6 @@ class Instance is export {
     method launch {
         say 'staging...';
 
-        die %?RESOURCES<wordpress/docker-compose.yaml>.absolute;
-
         chdir "$*HOME/wordpress";
 
         qqx`sudo docker-compose up -d`.say;
