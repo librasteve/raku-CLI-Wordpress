@@ -22,37 +22,39 @@ class Instance is export {
     method launch {
         say 'staging...';
 
-	chdir "$*HOME/wordpress";
+        die %?RESOURCES<wordpress/docker-compose.yaml>.absolute;
 
-	qqx`sudo docker-compose up -d`.say;
+        chdir "$*HOME/wordpress";
 
-	sleep 5;
-	qqx`sudo docker-compose ps`.say;
+        qqx`sudo docker-compose up -d`.say;
 
-	#| check if staging was successful
-    my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
+        sleep 5;
+        qqx`sudo docker-compose ps`.say;
 
-	die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
+        #| check if staging was successful
+        my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
 
-	say 'staging OK, now getting cert...';
-	say '[go "zef install ..." again to reset]';
+        die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
 
-	my $dc;
-    $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-	$dc ~~ s:g/'--staging'/'--force-renewal'/;
-	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+        say 'staging OK, now getting cert...';
+        say '[go "zef install ..." again to reset]';
 
-	qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
+        my $dc;
+        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+        $dc ~~ s:g/'--staging'/'--force-renewal'/;
+        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 
-	qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx-ssl.conf $*HOME/wordpress/nginx-conf/nginx.conf`;
+        qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
 
-	#| add secure port
-	$dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-	my $new-ports = "- \"80:80\"\n      - \"443:443\"";
-	$dc ~~ s:g/'- "80:80"'/$new-ports/;
-	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx-ssl.conf $*HOME/wordpress/nginx-conf/nginx.conf`;
 
-	qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
+        #| add secure port
+        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+        my $new-ports = "- \"80:80\"\n      - \"443:443\"";
+        $dc ~~ s:g/'- "80:80"'/$new-ports/;
+        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+
+        qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
 	#iamerejh
 
     }
