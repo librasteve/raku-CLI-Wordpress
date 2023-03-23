@@ -39,7 +39,7 @@ class Instance is export {
 
         my $dc;
         $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-        $dc ~~ s:g/'--staging'/'--force-renewal'/;
+        $dc ~~ s:g/'--staging'/--force-renewal/;
         "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 
         qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
