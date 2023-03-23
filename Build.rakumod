@@ -6,12 +6,19 @@ class Build {
         my $domain-name  = 'furnival.net';
         my $admin-email  = 'hccs@furnival.net';
 
-        #FIXME - just make .env random in production
-
         chdir $*HOME;
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
         chdir 'wordpress';
+
+    #FIXME - just make .env random in production
+my $text0 = q:to/END0/;
+MYSQL_ROOT_PASSWORD=boris
+MYSQL_USER=wp_007
+MYSQL_PASSWORD='g0ldf1nger'
+END0
+
+        qqx`echo \'$text0\' > .env`;
 
 my $text1 = q:to/END1/;
 .env
