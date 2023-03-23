@@ -7,12 +7,14 @@ class Build {
         my $admin-email  = 'hccs@furnival.net';
 
         #FIXME - just make .env random in production
-        warn %?RESOURCES<wordpress>;
-        warn $*HOME;
 
-        #qqx`mv %?RESOURCES<wordpress> $*HOME`;
+        chdir $*HOME;
+        mkdir 'wordpress';
+        mkdir 'wordpress/nginx-conf';
 
-        #chdir "$*HOME/wordpress";
+        copy %?RESOURCES<wordpress/docker-compose.yaml> $*HOME;
+
+
 
         say qqx`pwd`;
 
