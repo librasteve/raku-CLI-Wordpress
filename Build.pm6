@@ -7,8 +7,11 @@ class Build {
         my $admin-email  = 'hccs@furnival.net';
 
         #FIXME - just make .env random in production
+        warn %?RESOURCES<wordpress>;
+        warn $*HOME;
 
         qqx`mv %?RESOURCES<wordpress> $*HOME`;
+
         chdir "$*HOME/wordpress";
 
         say qqx`pwd`;
