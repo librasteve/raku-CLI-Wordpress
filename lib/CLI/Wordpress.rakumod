@@ -30,7 +30,7 @@ class Instance is export {
 	qqx`sudo docker-compose ps`.say;
 
 	#| check if staging was successful
-        my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`; 
+    my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
 
 	die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
 
@@ -38,7 +38,7 @@ class Instance is export {
 	say '[go "zef install ..." again to reset]';
 
 	my $dc;
-        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+    $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
 	$dc ~~ s:g/'--staging'/'--force-renewal'/;
 	"$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 

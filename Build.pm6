@@ -6,20 +6,14 @@ class Build {
         my $domain-name  = 'furnival.net';
         my $admin-email  = 'hccs@furnival.net';
 
-        chdir $*HOME;
-        mkdir 'wordpress';
-        chdir 'wordpress';
-        mkdir 'nginx-conf';
+        #FIXME - just make .env random in production
 
-        #FIXME - just make these random in production
-my $text0 = q:to/END0/;
-MYSQL_ROOT_PASSWORD=boris
-MYSQL_USER=wp_007
-MYSQL_PASSWORD='g0ldf1nger'
-END0
+        qqx`mv %?RESOURCES<wordpress> $*HOME`;
+        chdir "$*HOME/wordpress";
 
-        qqx`echo \'$text0\' > .env`;
+        say qqx`pwd`;
 
+        #`[[
 my $text1 = q:to/END1/;
 .env
 .git
@@ -281,4 +275,5 @@ END5
         
         exit 0
     }
+    #]]
 }

@@ -16,7 +16,13 @@
   "provides": {
     "CLI::Wordpress": "lib/CLI/Wordpress.rakumod"
   },
-  "resources": [],
+  "resources": [
+    "wordpress/.env",
+    "wordpress/.gitignore",
+    "wordpress/docker-compose.yaml",
+    "wordpress/nginx-conf/nginx.nossl",
+    "wordpress/nginx-conf/nginx.ssl"
+  ],
   "license": "Artistic-2.0",
   "tags": [
     "Wordpress",
