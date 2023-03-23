@@ -44,7 +44,8 @@ class Instance is export {
 
         qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
 
-        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx-ssl.conf $*HOME/wordpress/nginx-conf/nginx.conf`;
+        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.conf $*HOME/wordpress/nginx-conf/nginx.nossl`;
+        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
 
         #| add secure port
         $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
