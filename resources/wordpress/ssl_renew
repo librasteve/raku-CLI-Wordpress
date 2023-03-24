@@ -1,0 +1,2 @@
+0 12 * * * /home/ubuntu/wordpress/ssl_renew.sh >> /var/log/cron.log 2>&1
+0 */4 * * * date >> /var/log/cron.log 2>&1
