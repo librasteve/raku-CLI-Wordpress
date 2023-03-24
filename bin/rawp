@@ -3,16 +3,19 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <launch start stop list connect terminate>;
+enum Command <launch renew start stop list connect terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <launch start stop list connect terminate>
+    Command $cmd,                           #= One of <launch renew start stop list connect terminate>
 ) {
     say $cmd;
 
     given $cmd {
         when 'launch' {
             Instance.new.launch
+        }
+        when 'renew' {
+            Instance.new.renew
         }
         when 'list' {
 	    say 'ho';

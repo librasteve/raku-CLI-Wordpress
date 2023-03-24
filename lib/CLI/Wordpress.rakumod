@@ -20,7 +20,7 @@ class Instance is export {
     has $.c = Config.new;
 
     method launch {
-        say 'staging...';
+        say 'start staging...';
 
         chdir "$*HOME/wordpress";
 
@@ -36,31 +36,34 @@ class Instance is export {
 
         die 'staging Failed' unless @output[*-1] ~~ /'furnival.net'/;     #FIXME dehardwire
 
-        say 'staging OK, now getting cert...';
-        say '[go "zef install ..." again to reset]';
+        #| proceed
+        say 'staging OK, now getting cert & switching to ssl nginx...';
+        say 'this will use one of your 5/week lets-encrypt quota...';
+        say 'you now have 5 seconds to abort (ctrl-C)';
+        sleep 5;
+        say '[you must now go "zef install ..." again to rebuild from no ssl]';
 
+        #| get cert
         qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --force-renewal --non-interactive -d furnival.net -d www.furnival.net`.say;
 
+        #| reconfigure webserver to ssl
         qqx`sudo docker-compose stop webserver`;
+
         qqx`sudo curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf`;
 
+        #| swap out nginx.conf
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.conf $*HOME/wordpress/nginx-conf/nginx.nossl`;
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
 
-        #| add secure port
-#        my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-#        my $newport = "- \"80:80\"\n      - \"443:443\"";
-#        $dc ~~ s:g/'- "80:80"'/$newport/;
-#        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
-
+        #| restart as ssl
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
+    }
 
-
-	#iamerejh
-	#certbot limit 5 per week
-	#is this ok with docker up/down? [maybe should inject the command via exec? so do not re-launch on every start]
-	#ditto aws start/stop
-
+    method renew {
+        say 'setting up cert renewals...'
+        #| setup cert renewal
+        qqx`sudo chmod +x ssl_renew.sh`;
+        qqx`sudo crontab ssl_renew`;
     }
 
 #`[

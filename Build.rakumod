@@ -244,11 +244,32 @@ END4
 
         qqx`echo \'$text4\' > docker-compose.yaml`;
 
+my $text5 = q:to/END5/;
+#!/bin/bash
+
+DOCKER="/usr/bin/docker"
+COMPOSE="/usr/bin/docker-compose"
+
+cd /home/ubuntu/wordpress
+$DOCKER container prune -f
+$COMPOSE run certbot renew && $COMPOSE kill -s SIGHUP webserver
+END5
+
+        qqx`echo \'$text5\' > ssl_renew.sh`;
+
+my $text6 = q:to/END6/;
+3 15 * * * /home/ubuntu/wordpress/ssl_renew.sh >> /var/log/cron.log 2>&1
+0 0/4 * * * date >> /var/log/cron.log 2>&1
+*/1 * * * * raku -e 'say "yo"' >> /var/log/cron.log 2>&1
+END6
+
+        qqx`echo \'$text6\' > ssl_renew`;
+
         chdir $*HOME;
         mkdir '.rawp-config';
         chdir '.rawp-config';
 
-my $text5 = q:to/END5/;
+my $text7 = q:to/END7/;
 instance:
     image: ami-0f540e9f488cfa27d            # <== the standard, clean AWS Ubuntu
     #image: ami-0c1163e529aeb9b20            # <== AWS Ubuntu plus raws-ec2 setup already applied (use --nsu flag)
@@ -273,9 +294,9 @@ instance:
             - inbound:
                 port: 8888
                 cidr: 0.0.0.0/0
-END5
+END7
 
-        qqx`echo \'$text5\' > wordpress-launch.yaml`;
+        qqx`echo \'$text7\' > wordpress-launch.yaml`;
 
         warn 'Build successful';
 
