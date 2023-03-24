@@ -2,9 +2,9 @@
 
 # Raku CLI::Wordpress
 
-This module provides a simple abstraction to the Wordpress command line interface (wpcli) for managing Wordpress installation.
+This module provides a simple abstraction to the Wordpress command line interface (wpcli) for site launch and maintenance.
 
-If you encounter a feature of wpcli you want that's not implemented by this module (and there are many), please consider sending a pull request.
+If you encounter a feature you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
 ## Getting Started
 - install rawp on target
@@ -58,7 +58,7 @@ Success: 3 replacements to be made.
 - [x] launch
 - [x] renewal
 - [x] up
-- [x] wp          #exec wpcli cmd viz. https://developer.wordpress.org/cli/commands/
+- [x] wp 'cmd'    #run wpcli command - viz. https://developer.wordpress.org/cli/commands/
 - [x] down
 - [x] ps
 - [x] connect

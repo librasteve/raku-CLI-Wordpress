@@ -9,7 +9,7 @@ class Config is export {
     has %.y;
 
     method TWEAK {
-        %!y        := %config-yaml;
+        %!y := %config-yaml;
     }
 }
 
