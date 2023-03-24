@@ -5,6 +5,10 @@ use JSON::Fast;
 
 my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);   # only once
 
+my $elastic-ip   = '35.177.143.49';
+my $domain-name  = 'furnival.net';
+my $admin-email  = 'hccs@furnival.net';
+
 class Config is export {
     has %.y;
 
