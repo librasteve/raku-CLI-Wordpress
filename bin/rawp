@@ -37,7 +37,8 @@ sub MAIN(
             Instance.new.terminate
         }
         default {
-                die "sorry, I do not undertans...";
+            say 'sorry, I do not understand...';
+
         }
     }
 }
