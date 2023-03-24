@@ -69,7 +69,7 @@ class Instance is export {
         qqx`sudo crontab ssl_renew`;
 
         #iamerejh check next install & remove yo tick
-        #```sudo tail -f /var/log/cron.log``` to see activity
+        #sudo tail -f /var/log/cron.log to see activity
     }
 
 #`[
