@@ -9,7 +9,7 @@ If you encounter a feature you want that's not implemented by this module (and t
 ## Prerequisites
 - ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/p6steve/raku-CLI-AWS-EC2-Simple))
 - located at a static IP address (e.g. ```raws-ec2 --eip launch```) with ssh access (e.g. via ```raws-ec2 connect```)
-- domain name with A records example.org and www.example.org to the IP address
+- domain name DNS set with A records @ and www to the target's IP address
 
 ## Getting Started
 - ssh in and install rawp on target
