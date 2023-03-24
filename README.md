@@ -8,9 +8,11 @@ If you encounter a feature you want that's not implemented by this module (and t
 
 ## Prerequisites
 - ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/p6steve/raku-CLI-AWS-EC2-Simple))
+- located at a static IP address (e.g. ```raws-ec2 --eip launch```) with ssh access (e.g. via ```raws-ec2 connect```)
+- domain name with A records example.org and www.example.org to the IP address
 
 ## Getting Started
-- install rawp on target
+- ssh in and install rawp on target
 ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git``` _[or CLI::Wordpress]_
 - launch new instance of Wordpress & set up ssl certificate
 ```rawp launch```
