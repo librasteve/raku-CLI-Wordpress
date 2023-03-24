@@ -258,9 +258,8 @@ END5
         qqx`echo \'$text5\' > ssl_renew.sh`;
 
 my $text6 = q:to/END6/;
-3 15 * * * /home/ubuntu/wordpress/ssl_renew.sh >> /var/log/cron.log 2>&1
-0 0/4 * * * date >> /var/log/cron.log 2>&1
-*/1 * * * * raku -e 'say "yo"' >> /var/log/cron.log 2>&1
+0 12 * * * /home/ubuntu/wordpress/ssl_renew.sh >> /var/log/cron.log 2>&1
+0 */4 * * * date >> /var/log/cron.log 2>&1
 END6
 
         qqx`echo \'$text6\' > ssl_renew`;

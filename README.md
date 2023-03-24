@@ -11,10 +11,12 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git```
 - launch new instance of Wordpress
 ```rawp launch```
+- set up certificate 
 
 
 ###CMDs
-- [ ] launch
+- [x] launch
+- [x] renew
 - [x] start ```sudo docker-compose up -d```
 - [x] stop ```sudo docker-compose down```
 - [x] list ```sudo docker-compose ps```
