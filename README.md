@@ -7,7 +7,7 @@ This module provides a simple abstraction to the Wordpress command line interfac
 If you encounter a feature you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
 ## Prerequisites
-- ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/p6steve/raku-CLI-AWS-EC2-Simple)
+- ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/p6steve/raku-CLI-AWS-EC2-Simple))
 
 ## Getting Started
 - install rawp on target
