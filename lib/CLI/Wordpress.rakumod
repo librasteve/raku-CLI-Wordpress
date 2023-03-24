@@ -29,8 +29,6 @@ class Instance is export {
         sleep 5;
         qqx`sudo docker-compose ps`.say;
 
-        qqx`sudo docker-compose run certbot renew --dry-run`.say;
-
         qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         #| check if staging was successful
@@ -40,11 +38,8 @@ class Instance is export {
 
         say 'staging OK, now getting cert...';
         say '[go "zef install ..." again to reset]';
-        die 'yo';
-        my $dc;
-        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-        $dc ~~ s:g/'--staging'/--force-renewal/;
-        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+
+        qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --force-renewal --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
 
@@ -55,7 +50,7 @@ class Instance is export {
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
 
         #| add secure port
-        $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+        my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
         my $newport = "- \"80:80\"\n      - \"443:443\"";
         $dc ~~ s:g/'- "80:80"'/$newport/;
         "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
