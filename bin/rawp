@@ -3,10 +3,10 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <launch renew up wp down ps connect terminate>;
+#enum Command <launch renew up wp down ps connect terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <launch renew up wp down ps connect terminate>
+    Str    $cmd,                           #= One of <launch renew up wp down ps connect terminate>
     Str    :$wp = '',                       #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
     say $cmd ~ $wp;
@@ -35,6 +35,9 @@ sub MAIN(
         }
         when 'terminate' {
             Instance.new.terminate
+        }
+        default {
+                die "sorry, I do not undertans...";
         }
     }
 }
