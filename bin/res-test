@@ -3,6 +3,8 @@ use v6.d;
 
 my $foo-IO = %?RESOURCES<wordpress/.env>;
 
+dd $foo-IO;
+
 my $txt = $foo-IO.slurp;
 
 $txt.say;
