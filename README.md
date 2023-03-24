@@ -35,5 +35,17 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
     <cmd>         One of <launch start stop connect terminate>
 ```
 
+##commands
+###1. launch
+
+This follows the advice on viz. https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose with a few exceptions:
+- docker-compose.yaml
+  - certbot does not run a command on docker-compose up -d to avoid exceeding the (5/week) limit of let's encrypt, instead the cerbot image is started (and allowed to exit) when it can be re-run with the needed commands:
+     - ```sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net``` (once on launch, eg. after termination)
+     - ```sudo docker-compose run certbot renew --dry-run```
+
+
+
+
 ### Copyright
 copyright(c) 2023 Henley Cloud Consulting Ltd.

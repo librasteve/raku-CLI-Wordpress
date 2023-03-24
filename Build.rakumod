@@ -211,9 +211,8 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    #command: certonly --webroot --webroot-path=/var/www/html --email sammy@your_domain --agree-tos --no-eff-email --staging -d your_domain -d www.your_domain
-    #command: certonly --webroot --webroot-path=/var/www/html --email $admin-email --agree-tos --no-eff-email --staging -d $domain-name -d www.$domain-name
-    command: certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net
+    #drop auto command
+    #command: certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net
 
 #  wpcli:
 #    container_name: wpcli

@@ -29,6 +29,8 @@ class Instance is export {
         sleep 5;
         qqx`sudo docker-compose ps`.say;
 
+        qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net`;
+
         #| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
 
@@ -36,7 +38,7 @@ class Instance is export {
 
         say 'staging OK, now getting cert...';
         say '[go "zef install ..." again to reset]';
-
+        die 'yo';
         my $dc;
         $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
         $dc ~~ s:g/'--staging'/--force-renewal/;
@@ -44,17 +46,25 @@ class Instance is export {
 
         qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
 
+        qqx`sudo docker-compose stop webserver`;
+        qqx`sudo curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf`;
+
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.conf $*HOME/wordpress/nginx-conf/nginx.nossl`;
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
 
         #| add secure port
         $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-        my $new-ports = "- \"80:80\"\n      - \"443:443\"";
-        $dc ~~ s:g/'- "80:80"'/$new-ports/;
+        my $newport = "- \"80:80\"\n      - \"443:443\"";
+        $dc ~~ s:g/'- "80:80"'/$newport/;
         "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
+
+
 	#iamerejh
+	#certbot limit 5 per week
+	#is this ok with docker up/down? [maybe should inject the command via exec? so do not re-launch on every start]
+	#ditto aws start/stop
 
     }
 
