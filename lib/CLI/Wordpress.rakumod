@@ -108,9 +108,9 @@ class Instance is export {
         my $dist = $?DISTRIBUTION;
         $dist.say;
 
-        my $foo-IO = %?RESOURCES<wordpress/ssl_renew>;
-        my $txt = $foo-IO.slurp;
-        $txt.say;
+        %?RESOURCES<wordpress/ssl_renew>.slurp.say;
+        %?RESOURCES<wordpress/ssl_renew>.absolute.say
+
     }
 }
 

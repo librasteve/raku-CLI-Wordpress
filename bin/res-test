@@ -1,9 +1,0 @@
-#!/usr/bin/env perl6
-use v6.d;
-
-#my $foo-IO = %?RESOURCES<wordpress/ssl_renew>;
-#my $txt = $foo-IO.slurp;
-#$txt.say;
-
-my $dist = $?DISTRIBUTION;
-$dist.say;
