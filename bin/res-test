@@ -2,9 +2,8 @@
 use v6.d;
 
 my $foo-IO = %?RESOURCES<wordpress/ssl_renew>;
-
-dd $foo-IO;
-
 my $txt = $foo-IO.slurp;
-
 $txt.say;
+
+my $dist = $?DISTRIBUTION;
+$dist.say;
