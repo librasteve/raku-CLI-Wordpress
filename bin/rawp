@@ -7,7 +7,7 @@ use CLI::Wordpress;
 
 sub MAIN(
     Str    $cmd,                           #= One of <launch renew up wp down ps connect terminate>
-    Str    :$wp = '',                       #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
+    Str    $wp?,                           #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
     say $cmd ~ $wp;
 
@@ -22,6 +22,7 @@ sub MAIN(
             Instance.new.up
         }
         when 'wp' {
+            say 'please provide a valid wpcli cmd string' without $wp;
             Instance.new.wp(:$wp)
         }
         when 'down' {
