@@ -18,7 +18,6 @@
   },
   "resources": [
     "wordpress/.env",
-    "wordpress/.gitignore",
     "wordpress/nginx-conf/nginx.conf",
     "wordpress/nginx-conf/nginx.ssl",
     "wordpress/docker-compose.yaml",
