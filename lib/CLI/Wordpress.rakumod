@@ -81,6 +81,7 @@ class Instance is export {
     }
 
     method wp(:$wp) {
+    die $wp;
         chdir "$*HOME/wordpress";
         qqx`sudo docker exec wpcli wp $wp`.say
     }
