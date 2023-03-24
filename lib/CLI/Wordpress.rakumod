@@ -103,6 +103,11 @@ class Instance is export {
         chdir "$*HOME/wordpress";
         qqx`sudo docker-compose down -v`.say
     }
+
+    method dist {
+        my $dist = $?DISTRIBUTION;
+        $dist.say;
+    }
 }
 
 
