@@ -111,7 +111,7 @@ class Instance is export {
         chdir 'wordpress';
 
         %?RESOURCES<wordpress/ssl_renew>.slurp.say;
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, $*HOME/wordpress/ssl_renew;
+        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/ssl_renew";
 
     }
 }
