@@ -6,19 +6,20 @@ This module provides a simple abstraction to the Wordpress command line interfac
 
 If you encounter a feature of wpcli you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
-## Design
+## Getting Started
 - install rawp on target
 ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git```
-- launch new instance of Wordpress
+- launch new instance of Wordpress & set up ssl certificate
 ```rawp launch```
-- set up certificate 
+- setup ssl cert renewals via letsencrypt
+```rwap renewal```
 
 
 ###CMDs
 - [x] launch
-- [x] renew
+- [x] renewal
 - [x] up
-- [ ] wp          #exec wpcli cmd viz. https://developer.wordpress.org/cli/commands/
+- [x] wp          #exec wpcli cmd viz. https://developer.wordpress.org/cli/commands/
 - [x] down
 - [x] ps
 - [x] connect
@@ -31,9 +32,10 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 
 ## Usage
 ```
-./rawp <cmd>
+  rawp <cmd> [<wp>]
   
-    <cmd>         One of <launch start stop connect terminate>
+    <cmd>     One of <launch renewal up wp down ps connect terminate>
+    [<wp>]    A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ```
 
 ##commands

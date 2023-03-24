@@ -61,7 +61,7 @@ class Instance is export {
         qqx`sudo docker-compose up -d --force-recreate --no-deps wpcli`;
     }
 
-    method renew {
+    method renewal {
         say 'setting up cert renewals...';
         say '[go "sudo tail -f /var/log/cron.log" to review]';
 
