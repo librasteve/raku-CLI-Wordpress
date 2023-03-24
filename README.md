@@ -17,9 +17,9 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 ###CMDs
 - [x] launch
 - [x] renew
-- [x] start ```sudo docker-compose up -d```
-- [x] stop ```sudo docker-compose down```
-- [x] list ```sudo docker-compose ps```
+- [x] up 
+- [x] down ```sudo docker-compose down```
+- [x] ps ```sudo docker-compose ps```
 - [x] connect ```sudo docker exec -it ubuntu_wordpress_1 "/bin/bash"```
 - [x] terminate ```sudo docker compose down -v```  #rm volumes & reset
 - [ ] exec #wpcli cmd

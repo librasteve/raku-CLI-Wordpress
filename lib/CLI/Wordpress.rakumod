@@ -67,20 +67,25 @@ class Instance is export {
         qqx`sudo crontab ssl_renew`;
     }
 
-#`[
+    method up {
+        qqx`sudo docker-compose up -d`.say
+    }
+
+    method down {
+        qqx`sudo docker-compose down`.say
+    }
+
+    method ps {
+        qqx`sudo docker-compose ps`.say
+    }
+
     method connect {
-        self.wait-until-running;
-        
-        my $dns = self.public-dns-name;
-        qq`ssh -o "StrictHostKeyChecking no" -i "{$!s.kpn}.pem" ubuntu@$dns`
+        qqx`sudo docker exec -it wordpress "/bin/bash"`;
     }
 
     method terminate {
-        say 'terminating...';
-        qqx`aws ec2 terminate-instances --instance-ids $!id`
+        qqx`sudo docker-compose down -v`.say
     }
-
-    #]
 }
 
 

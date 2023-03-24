@@ -3,10 +3,10 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <launch renew start stop list connect terminate>;
+enum Command <launch renew up down ps connect terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <launch renew start stop list connect terminate>
+    Command $cmd,                           #= One of <launch renew up down ps connect terminate>
 ) {
     say $cmd;
 
@@ -17,34 +17,21 @@ sub MAIN(
         when 'renew' {
             Instance.new.renew
         }
-        when 'list' {
-	    say 'ho';
+        when 'up' {
+            Instance.new.up
         }
-    #`[
-        when 'state' {
-            Instance.new( :$s, id => focus-id ).state.say
+        when 'down' {
+            Instance.new.down
         }
-        when 'setup' {
-            Instance.new( :$s, id => focus-id ).setup
+        when 'ps' {
+            Instance.new.ps
         }
         when 'connect' {
-            Instance.new( :$s, id => focus-id ).connect.say
+            Instance.new.connect
         }
         when 'terminate' {
-            Instance.new( :$s, id => focus-id ).terminate
+            Instance.new.terminate
         }
-        when 'nuke' {
-            unless $y {                     # silence check
-                my $check = prompt "This will terminate all instances. You sure (y/N)? ";
-
-                unless $check eq 'y' { die "Aborting operation..." }
-            }
-
-            for $s.instance-ids -> $id {
-                Instance.new( :$s, :$id ).terminate
-            }
-        }
-    #]
     }
 }
 
