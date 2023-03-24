@@ -1,7 +1,7 @@
 #!/usr/bin/env perl6
 use v6.d;
 
-my $foo-IO = %?RESOURCES<wordpress/ssl_renew>.absolute;
+my $foo-IO = %?RESOURCES<wordpress/ssl_renew>;
 
 dd $foo-IO;
 
