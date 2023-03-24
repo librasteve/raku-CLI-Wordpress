@@ -60,10 +60,16 @@ class Instance is export {
     }
 
     method renew {
-        say 'setting up cert renewals...'
+        say 'setting up cert renewals...';
+
+        chdir "$*HOME/wordpress";
+
         #| setup cert renewal
         qqx`sudo chmod +x ssl_renew.sh`;
         qqx`sudo crontab ssl_renew`;
+
+        #iamerejh check next install & remove yo tick
+        #```sudo tail -f /var/log/cron.log``` to see activity
     }
 
 #`[
