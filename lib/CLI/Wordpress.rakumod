@@ -109,7 +109,7 @@ class Instance is export {
         $dist.say;
 
         %?RESOURCES<wordpress/ssl_renew>.slurp.say;
-        %?RESOURCES<wordpress/ssl_renew>.absolute.say
+        %?RESOURCES<wordpress/ssl_renew>.absolute.^name;
 
     }
 }
