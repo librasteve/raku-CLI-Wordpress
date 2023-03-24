@@ -9,7 +9,7 @@ sub MAIN(
     Str    $cmd,                           #= One of <launch renew up wp down ps connect terminate>
     Str    $wp?,                           #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
-    say $cmd ~ $wp;
+    say $cmd;
 
     given $cmd {
         when 'launch' {
