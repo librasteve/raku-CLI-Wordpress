@@ -108,8 +108,11 @@ class Instance is export {
         my $dist = $?DISTRIBUTION;
         $dist.say;
 
+        chdir $*HOME;
+        mkdir 'scum';
+
         %?RESOURCES<wordpress/ssl_renew>.slurp.say;
-        %?RESOURCES<wordpress/ssl_renew>.absolute.^name;
+        copy %?RESOURCES<wordpress/ssl_renew>.absolute $*HOME/scum;
 
     }
 }
