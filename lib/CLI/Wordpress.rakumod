@@ -105,14 +105,13 @@ class Instance is export {
     }
 
     method dist {
-        my $dist = $?DISTRIBUTION;
-        $dist.say;
-
         chdir $*HOME;
-        mkdir 'scum';
+        mkdir 'wordpress';
+        mkdir 'wordpress/nginx-conf';
+        chdir 'wordpress';
 
         %?RESOURCES<wordpress/ssl_renew>.slurp.say;
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/scum/ssl_renew";
+        copy %?RESOURCES<wordpress/ssl_renew>.absolute, $*HOME/wordpress/ssl_renew;
 
     }
 }
