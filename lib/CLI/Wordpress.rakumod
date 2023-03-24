@@ -112,7 +112,7 @@ class Instance is export {
         mkdir 'scum';
 
         %?RESOURCES<wordpress/ssl_renew>.slurp.say;
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute $*HOME/scum;
+        copy %?RESOURCES<wordpress/ssl_renew>.absolute, $*HOME/scum;
 
     }
 }
