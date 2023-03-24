@@ -41,8 +41,6 @@ class Instance is export {
 
         qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --force-renewal --non-interactive -d furnival.net -d www.furnival.net`.say;
 
-        qqx`sudo docker-compose up --force-recreate --no-deps certbot`;
-
         qqx`sudo docker-compose stop webserver`;
         qqx`sudo curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf`;
 
