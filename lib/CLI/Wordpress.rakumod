@@ -48,10 +48,10 @@ class Instance is export {
         qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
 
         #| add secure port
-        my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
-        my $newport = "- \"80:80\"\n      - \"443:443\"";
-        $dc ~~ s:g/'- "80:80"'/$newport/;
-        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
+#        my $dc = "$*HOME/wordpress/docker-compose.yaml".IO.slurp;
+#        my $newport = "- \"80:80\"\n      - \"443:443\"";
+#        $dc ~~ s:g/'- "80:80"'/$newport/;
+#        "$*HOME/wordpress/docker-compose.yaml".IO.spurt: $dc;
 
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
 
