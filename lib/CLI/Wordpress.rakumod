@@ -83,8 +83,7 @@ class Instance is export {
     }
 
     method connect {
-        chdir "$*HOME/wordpress";
-        qqx`sudo docker exec -it wordpress "/bin/bash"`;
+        say 'sudo docker exec -it wordpress "/bin/bash"'
     }
 
     method terminate {
