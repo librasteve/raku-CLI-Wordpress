@@ -110,12 +110,12 @@ class Instance is export {
         mkdir 'wordpress/nginx-conf';
         chdir 'wordpress';
 
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/.env";
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/nginx-conf/nginx.ssl";
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/docker-compose.yaml";
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/ssl_renew.sh";
-        copy %?RESOURCES<wordpress/ssl_renew>.absolute, "$*HOME/wordpress/ssl_renew";
+        copy %?RESOURCES<wordpress/.env>.absolute,                  "$*HOME/wordpress/.env";
+        copy %?RESOURCES<wordpress/nginx-conf/nginx.conf>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
+        copy %?RESOURCES<wordpress/nginx-conf/nginx.ssl>.absolute,  "$*HOME/wordpress/nginx-conf/nginx.ssl";
+        copy %?RESOURCES<wordpress/docker-compose.yaml>.absolute,   "$*HOME/wordpress/docker-compose.yaml";
+        copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,          "$*HOME/wordpress/ssl_renew.sh";
+        copy %?RESOURCES<wordpress/ssl_renew>.absolute,             "$*HOME/wordpress/ssl_renew";
 
     }
 }
