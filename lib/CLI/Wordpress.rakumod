@@ -68,22 +68,27 @@ class Instance is export {
     }
 
     method up {
+        chdir "$*HOME/wordpress";
         qqx`sudo docker-compose up -d`.say
     }
 
     method down {
+        chdir "$*HOME/wordpress";
         qqx`sudo docker-compose down`.say
     }
 
     method ps {
+        chdir "$*HOME/wordpress";
         qqx`sudo docker-compose ps`.say
     }
 
     method connect {
+        chdir "$*HOME/wordpress";
         qqx`sudo docker exec -it wordpress "/bin/bash"`;
     }
 
     method terminate {
+        chdir "$*HOME/wordpress";
         qqx`sudo docker-compose down -v`.say
     }
 }
