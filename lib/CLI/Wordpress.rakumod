@@ -21,11 +21,13 @@ class Instance is export {
 
         chdir "$*HOME/wordpress";
 
+        #| start services in no ssl mode
         qqx`sudo docker-compose up -d`.say;
 
         sleep 5;
         qqx`sudo docker-compose ps`.say;
 
+        #| try to load ssl cert '--staging'
         qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         #| check if staging was successful
@@ -40,7 +42,7 @@ class Instance is export {
         sleep 5;
         say '[go "zef install ..." again to revert to no ssl]';
 
-        #| get cert
+        #| really load cert  '--force-renewal'
         qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --force-renewal --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         #| reconfigure webserver to ssl
@@ -54,6 +56,9 @@ class Instance is export {
 
         #| restart with ssl certificates
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
+
+        #| start wpcli
+        qqx`sudo docker-compose up -d --force-recreate --no-deps wpcli`;
     }
 
     method renew {
@@ -69,7 +74,15 @@ class Instance is export {
 
     method up {
         chdir "$*HOME/wordpress";
-        qqx`sudo docker-compose up -d`.say
+        qqx`sudo docker-compose up -d`.say;
+
+        #| start wpcli
+        qqx`sudo docker-compose up -d --force-recreate --no-deps wpcli`;
+    }
+
+    method wp(:$wp) {
+        chdir "$*HOME/wordpress";
+        qqx`sudo docker exec wpcli wp $wp`.say
     }
 
     method down {

@@ -3,12 +3,13 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <launch renew up down ps connect terminate>;
+enum Command <launch renew up wp down ps connect terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <launch renew up down ps connect terminate>
+    Command $cmd,                           #= One of <launch renew up wp down ps connect terminate>
+    Str    :$wp = '',                       #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
-    say $cmd;
+    say $cmd ~ $wp;
 
     given $cmd {
         when 'launch' {
@@ -19,6 +20,9 @@ sub MAIN(
         }
         when 'up' {
             Instance.new.up
+        }
+        when 'wp' {
+            Instance.new.wp(:$wp)
         }
         when 'down' {
             Instance.new.down

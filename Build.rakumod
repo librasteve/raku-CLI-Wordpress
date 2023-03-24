@@ -174,7 +174,7 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:5.1.1-fpm-alpine
+    image: wordpress:php8.0-fpm-alpine
     container_name: wordpress
     restart: unless-stopped
     env_file: .env
@@ -212,25 +212,26 @@ services:
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    #drop auto command
-    #command: certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net
 
-#  wpcli:
-#    container_name: wpcli
-#    depends_on:
-#      - wordpress
-#    image: wordpress:cli
-#    user: 1000:1000
-#    command: tail -f /dev/null
-#    volumes:
-#      - wordpress:/var/www/html
-#    environment:
-#      - WORDPRESS_DB_HOST=db:3306
-#      - WORDPRESS_DB_USER=$MYSQL_USER
-#      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
-#      - WORDPRESS_DB_NAME=wordpress
-#    profiles:
-#      - dev
+  wpcli:
+    depends_on:
+      - wordpress
+    image: wordpress:cli-php8.0
+    container_name: wpcli
+    restart: unless-stopped
+    user: 1000:1000
+    command: tail -f /dev/null
+    volumes:
+      - wordpress:/var/www/html
+    environment:
+      - WORDPRESS_DB_HOST=db:3306
+      - WORDPRESS_DB_USER=$MYSQL_USER
+      - WORDPRESS_DB_PASSWORD=$MYSQL_PASSWORD
+      - WORDPRESS_DB_NAME=wordpress
+    profiles:
+      - dev
+    networks:
+      - app-network
 
 volumes:
   certbot-etc:

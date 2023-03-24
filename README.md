@@ -17,12 +17,13 @@ If you encounter a feature of wpcli you want that's not implemented by this modu
 ###CMDs
 - [x] launch
 - [x] renew
-- [x] up 
-- [x] down ```sudo docker-compose down```
-- [x] ps ```sudo docker-compose ps```
-- [x] connect ```sudo docker exec -it ubuntu_wordpress_1 "/bin/bash"```
-- [x] terminate ```sudo docker compose down -v```  #rm volumes & reset
-- [ ] exec #wpcli cmd
+- [x] up
+- [ ] wp          #exec wpcli cmd viz. https://developer.wordpress.org/cli/commands/
+- [x] down
+- [x] ps
+- [x] connect
+- [x] terminate   #rm volumes & reset
+
 
 ## Getting Started
 - zef install https://github.com/p6steve/raku-CLI-Wordpress.git _[or CLI::Wordpress]_
