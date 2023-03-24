@@ -31,7 +31,7 @@ class Instance is export {
 
         qqx`sudo docker-compose run certbot renew --dry-run`.say;
 
-        qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net`.say;
+        qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         #| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
