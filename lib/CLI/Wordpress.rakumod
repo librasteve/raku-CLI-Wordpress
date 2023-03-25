@@ -20,7 +20,7 @@ class Config is export {
 class Instance is export {
     has $.c = Config.new;
 
-    sub render($file) {
+    submethod render($file) {
 
         dd $!c.domain-name;
         my $txt = $file.IO.slurp;
@@ -41,7 +41,7 @@ class Instance is export {
         copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,           "$*HOME/wordpress/ssl_renew.sh";
         copy %?RESOURCES<wordpress/ssl_renew>.absolute,              "$*HOME/wordpress/ssl_renew";
 
-        render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
+        self.render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
 
         my $text = qq:to/END/;
         MYSQL_ROOT_PASSWORD='{('0'..'z').pick(23).join}'
