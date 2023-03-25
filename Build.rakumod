@@ -5,13 +5,13 @@ class Build {
         mkdir '.rawp-config';
         chdir '.rawp-config';
         
-my $text1 = q:to/END1/;
-instance:
-    domain-name: 'furnival.net'
-    admin-email: 'hccs@furnival.net'
-END1
+        my $text = q:to/END/;
+        instance:
+            domain-name: 'furnival.net'
+            admin-email: 'hccs@furnival.net'
+        END
 
-        qqx`echo \'$text1\' > wordpress-launch.yaml`;
+        qqx`echo \'$text\' > wordpress-launch.yaml`;
         
         warn 'Build successful';
         
