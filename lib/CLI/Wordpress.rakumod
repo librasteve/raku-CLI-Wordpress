@@ -38,7 +38,7 @@ class Instance is export {
             MYSQL_PASSWORD='g0ldf1nger'
         END
 
-        "$*HOME/wordpress/.env".spurt.$text;
+        "$*HOME/wordpress/.env".IO.spurt: $text;
     }
 
     method launch {
