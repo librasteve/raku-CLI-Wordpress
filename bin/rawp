@@ -3,7 +3,7 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <launch renewal up wp down ps connect terminate dist>;
+enum Command <setup launch renewal up wp down ps connect terminate dist>;
 
 sub MAIN(
     Command $cmd,                           #= One of <launch renewal up wp down ps connect terminate>
@@ -12,6 +12,9 @@ sub MAIN(
     say $cmd;
 
     given $cmd {
+        when 'setup' {
+            Instance.new.setup
+        }
         when 'launch' {
             Instance.new.launch
         }
@@ -36,9 +39,6 @@ sub MAIN(
         }
         when 'terminate' {
             Instance.new.terminate
-        }
-        when 'dist' {
-                Instance.new.dist
         }
     }
 }
