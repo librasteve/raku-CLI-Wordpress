@@ -20,12 +20,9 @@ class Config is export {
 class Instance is export {
     has $.c = Config.new;
 
-    submethod render($file) {
-
-        dd $!c.domain-name;
+    method render( $file ) {
         my $txt = $file.IO.slurp;
-
-        $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
+        $txt ~~ s:g/'%DOMAIN_NAME%'/$!c.domain-name/;
         $file.IO.spurt: $txt;
     }
 
@@ -87,6 +84,7 @@ class Instance is export {
 
         #| swap in ssl variant of nginx.conf
         copy %?RESOURCES<wordpress/nginx-conf/nginx.ssl>.absolute,  "$*HOME/wordpress/nginx-conf/nginx.conf";
+        self.render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
 
         #| restart webserver with ssl certificates
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;

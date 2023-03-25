@@ -2,8 +2,7 @@ server {
 	listen 80;
 	listen [::]:80;
 
-	#server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
-	server_name furnival.net www.furnival.net;
+	server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
 
 	location ~ /.well-known/acme-challenge {
 		allow all;
@@ -19,8 +18,7 @@ server {
 	listen 443 ssl http2;
 	listen [::]:443 ssl http2;
 
-	#server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
-	server_name furnival.net www.furnival.net;
+	server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
 
 	index index.php index.html index.htm;
 
@@ -28,10 +26,8 @@ server {
 
 	server_tokens off;
 
-    #ssl_certificate /etc/letsencrypt/live/%DOMAIN_NAME%/fullchain.pem;
-	#ssl_certificate_key /etc/letsencrypt/live/%DOMAIN_NAME%/privkey.pem;
-	ssl_certificate /etc/letsencrypt/live/furnival.net/fullchain.pem;
-	ssl_certificate_key /etc/letsencrypt/live/furnival.net/privkey.pem;
+    ssl_certificate /etc/letsencrypt/live/%DOMAIN_NAME%/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/%DOMAIN_NAME%/privkey.pem;
 
 	include /etc/nginx/conf.d/options-ssl-nginx.conf;
 
