@@ -2,8 +2,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    #server_name your_domain www.your_domain;
-    #server_name $domain-name www.$domain-name;
+    #server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
     server_name furnival.net www.furnival.net;
 
     index index.php index.html index.htm;

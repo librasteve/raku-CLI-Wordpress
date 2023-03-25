@@ -20,6 +20,14 @@ class Config is export {
 class Instance is export {
     has $.c = Config.new;
 
+    sub render($file) {
+        my $txt = $file.slurp;
+        say $txt;
+
+        $txt ~~ s:g/%DOMAIN_NAME%/booboo/;
+        $file.spurt: $txt;
+    }
+
     method setup {
         chdir $*HOME;
 
@@ -32,11 +40,8 @@ class Instance is export {
         copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,           "$*HOME/wordpress/ssl_renew.sh";
         copy %?RESOURCES<wordpress/ssl_renew>.absolute,              "$*HOME/wordpress/ssl_renew";
 
-#        my $text = q:to/END/;
-#        MYSQL_ROOT_PASSWORD=borisyo
-#        MYSQL_USER=wp_007
-#        MYSQL_PASSWORD='g0ldf1nger'
-#        END
+        render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
+
         my $text = qq:to/END/;
         MYSQL_ROOT_PASSWORD='{('0'..'z').pick(23).join}'
         MYSQL_USER={'wp_' ~ (0..9).pick(3).join}
