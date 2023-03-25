@@ -3,9 +3,7 @@ unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (p6steve@furnival.net)>;
 use YAMLish;
 use JSON::Fast;
 
-my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);   # only once
-
-my $elastic-ip   = '35.177.143.49';
+my $ip-address   = '35.177.143.49';
 my $domain-name  = 'furnival.net';
 my $admin-email  = 'hccs@furnival.net';
 
@@ -13,6 +11,8 @@ class Config is export {
     has %.y;
 
     method TWEAK {
+        my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);
+
         %!y := %config-yaml;
     }
 }
@@ -30,13 +30,18 @@ class Instance is export {
         mkdir 'wordpress/nginx-conf';
         chdir 'wordpress';
 
-        copy %?RESOURCES<wordpress/.env>.absolute,                  "$*HOME/wordpress/.env";
-        copy %?RESOURCES<wordpress/nginx-conf/nginx.conf>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
-        copy %?RESOURCES<wordpress/nginx-conf/nginx.ssl>.absolute,  "$*HOME/wordpress/nginx-conf/nginx.ssl";
+        copy %?RESOURCES<wordpress/nginx-conf/nginx.nossl>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
         copy %?RESOURCES<wordpress/docker-compose.yaml>.absolute,   "$*HOME/wordpress/docker-compose.yaml";
         copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,          "$*HOME/wordpress/ssl_renew.sh";
         copy %?RESOURCES<wordpress/ssl_renew>.absolute,             "$*HOME/wordpress/ssl_renew";
 
+        my $text = q:to/END/;
+            MYSQL_ROOT_PASSWORD=borisyo
+            MYSQL_USER=wp_007
+            MYSQL_PASSWORD='g0ldf1nger'
+        END
+
+        "$*HOME/wordpress/.env".spurt.$text;
     }
 
     method launch {
@@ -73,11 +78,10 @@ class Instance is export {
 
         qqx`sudo curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf`;
 
-        #| swap out nginx.conf
-        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.conf $*HOME/wordpress/nginx-conf/nginx.nossl`;
-        qqx`sudo cp $*HOME/wordpress/nginx-conf/nginx.ssl $*HOME/wordpress/nginx-conf/nginx.conf`;
+        #| swap in ssl variant of nginx.conf
+        copy %?RESOURCES<wordpress/nginx-conf/nginx.ssl>.absolute,  "$*HOME/wordpress/nginx-conf/nginx.conf";
 
-        #| restart with ssl certificates
+        #| restart webserver with ssl certificates
         qqx`sudo docker-compose up -d --force-recreate --no-deps webserver`;
 
         #| start wpcli
