@@ -24,7 +24,7 @@ class Instance is export {
         my $txt = $file.slurp;
         say $txt;
 
-        $txt ~~ s:g/%DOMAIN_NAME%/booboo/;
+        $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
         $file.spurt: $txt;
     }
 
