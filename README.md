@@ -12,7 +12,7 @@ If you encounter a feature you want that's not implemented by this module (and t
 - domain name DNS set with A records @ and www to the target's IP address
 
 ## Getting Started
-- ssh in and install CLI::Wordpress on target to get the raku command ```rawp```
+- ssh in and install CLI::Wordpress on target to get the rawp command
 ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git``` _[or CLI::Wordpress]_
 - launch a new instance of Wordpress & set up ssl certificate
 ```rawp launch```
