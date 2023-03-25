@@ -23,9 +23,6 @@ class Instance is export {
     method setup {
         chdir $*HOME;
 
-        mkdir '.rawp-config';
-        copy %?RESOURCES<.wordpress-launch.yaml>.absolute,           "$*HOME/.rawp-config/wordpress-launch.yaml";
-
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
         chdir 'wordpress';
