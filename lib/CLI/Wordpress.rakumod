@@ -25,7 +25,7 @@ class Instance is export {
         say $txt;
 
         $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
-        $file.spurt: $txt;
+        $file.IO.spurt: $txt;
     }
 
     method setup {
