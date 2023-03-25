@@ -22,8 +22,7 @@
     "wordpress/docker-compose.yaml",
     "wordpress/ssl_renew.sh",
     "wordpress/ssl_renew",
-    "wordpress-launch.yaml",
-    "wordpress/.env.swp"
+    "wordpress-launch.yaml"
   ],
   "license": "Artistic-2.0",
   "tags": [
