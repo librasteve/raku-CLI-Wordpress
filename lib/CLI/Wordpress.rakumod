@@ -3,17 +3,17 @@ unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (p6steve@furnival.net)>;
 use YAMLish;
 use JSON::Fast;
 
-my $ip-address   = '35.177.143.49';
-my $domain-name  = 'furnival.net';
-my $admin-email  = 'hccs@furnival.net';
-
 class Config is export {
     has %.y;
+    has $.domain-name;
+    has $.admin-email;
 
     method TWEAK {
         my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);
 
         %!y := %config-yaml;
+        $!domain-name := %!y<instance><domain-name>;
+        $!admin-email := %!y<instance><admin-email>;
     }
 }
 
@@ -21,8 +21,9 @@ class Instance is export {
     has $.c = Config.new;
 
     sub render($file) {
+
+    dd $!c;
         my $txt = $file.IO.slurp;
-        say $txt;
 
         $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
         $file.IO.spurt: $txt;
