@@ -22,7 +22,7 @@ class Instance is export {
 
     sub render($file) {
 
-    dd $!c;
+        dd $!c.domain-name;
         my $txt = $file.IO.slurp;
 
         $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
