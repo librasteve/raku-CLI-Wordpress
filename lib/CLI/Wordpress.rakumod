@@ -21,7 +21,7 @@ class Instance is export {
     has $.c = Config.new;
 
     sub render($file) {
-        my $txt = $file.slurp;
+        my $txt = $file.IO.slurp;
         say $txt;
 
         $txt ~~ s:g/'%DOMAIN_NAME%'/booboo/;
