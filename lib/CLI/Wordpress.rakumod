@@ -30,7 +30,7 @@ class Instance is export {
         $txt ~~ s:g/'%DB-IMAGE%'/$i<db-image>/;
         $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$i<wordpress-image>/;
         $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$i<webserver-image>/;
-        $txt ~~ s:g//'%CERTBOT-IMAGE%'/$i<certbot-image>/;
+        $txt ~~ s:g/'%CERTBOT-IMAGE%'/$i<certbot-image>/;
         $txt ~~ s:g/'%WPCLI-IMAGE%'/$i<wpcli-image>/;
 
         $file.IO.spurt: $txt;
