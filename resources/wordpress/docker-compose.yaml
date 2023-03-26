@@ -2,7 +2,8 @@ version: "3"
 
 services:
   db:
-    image: mysql:8.0
+    image: %DB-IMAGE%
+    #image: mysql:8.0
     container_name: db
     restart: unless-stopped
     env_file: .env
@@ -17,7 +18,8 @@ services:
   wordpress:
     depends_on:
       - db
-    image: wordpress:php8.0-fpm-alpine
+    image: %WORDPRESS-IMAGE%
+    #image: wordpress:php8.0-fpm-alpine
     container_name: wordpress
     restart: unless-stopped
     env_file: .env
@@ -34,7 +36,8 @@ services:
   webserver:
     depends_on:
       - wordpress
-    image: nginx:1.15.12-alpine
+    image: %WEBSERVER-IMAGE%
+    #image: nginx:1.15.12-alpine
     container_name: webserver
     restart: unless-stopped
     ports:
@@ -50,7 +53,8 @@ services:
   certbot:
     depends_on:
       - webserver
-    image: certbot/certbot
+    image: %CERTBOT-IMAGE%
+    #image: certbot/certbot
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
@@ -59,7 +63,8 @@ services:
   wpcli:
     depends_on:
       - wordpress
-    image: wordpress:cli-php8.0
+    image: %WPCLI-IMAGE%
+    #image: wordpress:cli-php8.0
     container_name: wpcli
     restart: unless-stopped
     user: 1000:1000
