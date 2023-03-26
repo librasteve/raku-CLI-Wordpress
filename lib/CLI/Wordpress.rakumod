@@ -32,15 +32,11 @@ class Instance is export {
 
     method render( $file ) {
 
-        warn $!c.raku;
-        warn $!c.db-image;
-
         my $txt = $file.IO.slurp;
-        $txt .= subst( /'%DOMAIN_NAME%'/, $!c.domain-name );
-        $txt .= subst( /'%DB-IMAGE%'/, "yo" );
-#        $txt.subst( /'%DB-IMAGE%'/, "$!c.db-image");
-#        $txt ~~ s:g/'%DOMAIN_NAME%'/"$!c.domain-name"/;
-#        $txt ~~ s:g/'%DB-IMAGE%'/"$!c.db-image"/;
+        $txt .= subst( :g, /'%DOMAIN_NAME%'/, $!c.domain-name );
+        $txt .= subst( :g, /'%DB-IMAGE%'/, $!c.db-image );
+#        $txt .= subst( /'%DB-IMAGE%'/, "$!c.db-image");
+
 #        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$!c.wordpress-image/;
 #        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$!c.webserver-image/;
 #        $txt ~~ s:g/'%CERTBOT-IMAGE%'/$!c.certbot-image/;
