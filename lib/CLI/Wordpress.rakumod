@@ -27,11 +27,11 @@ class Instance is export {
 #        $txt .= subst( :g, /'%WPCLI-IMAGE%'/, $i<wpcli-image> );
 
         $txt ~~ s:g/'%DOMAIN_NAME%'/$i<domain-name>/;
-#        $txt .= subst( :g, /'%DB-IMAGE%'/, $i<db-image> );
-#        $txt .= subst( :g, /'%WORDPRESS-IMAGE%'/, $i<wordpress-image> );
-#        $txt .= subst( :g, /'%WEBSERVER-IMAGE%'/, $i<webserver-image> );
-#        $txt .= subst( :g, /'%CERTBOT-IMAGE%'/, $i<certbot-image> );
-#        $txt .= subst( :g, /'%WPCLI-IMAGE%'/, $i<wpcli-image> );
+        $txt ~~ s:g/'%DB-IMAGE%'/$i<db-image>/;
+        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$i<wordpress-image>/;
+        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$i<webserver-image>/;
+        $txt ~~ s:g//'%CERTBOT-IMAGE%'/$i<certbot-image>/;
+        $txt ~~ s:g/'%WPCLI-IMAGE%'/$i<wpcli-image>/;
 
         $file.IO.spurt: $txt;
     }
