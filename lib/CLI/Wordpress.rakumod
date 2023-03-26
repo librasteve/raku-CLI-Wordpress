@@ -64,8 +64,7 @@ class Instance is export {
 
         #iamerejh
         my $certbot-cmd =
-        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email %i<admin-email>
-                          --agree-tos --no-eff-email --non-interactive -d %i<domain-name> -d www.%i<domain-name>`;
+        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email %i<admin-email> --agree-tos --no-eff-email --non-interactive -d %i<domain-name> -d www.%i<domain-name>`;
 
         #| try to load ssl cert '--staging'
         qqx`$certbot-cmd --staging`.say;
@@ -74,6 +73,7 @@ class Instance is export {
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
 
         die 'staging Failed' unless @output[*-1] ~~ %i<domain-name>;
+        #die 'staging Failed' unless @output[*-1] ~~ /%i<domain-name>/;
 
         #| proceed
         say 'staging OK, now getting cert & switching to ssl nginx...';
