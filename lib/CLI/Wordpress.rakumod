@@ -29,9 +29,10 @@ class Config is export {
 
 class Instance is export {
     has $.c = Config.new;
-    dd $!c;
 
     method render( $file ) {
+
+        dd $!c;
 
         my $txt = $file.IO.slurp;
         $txt ~~ s:g/'%DOMAIN_NAME%'/"$!c.domain-name"/;
