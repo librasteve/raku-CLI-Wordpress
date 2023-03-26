@@ -13,12 +13,24 @@ If you encounter a feature you want that's not implemented by this module (and t
 
 ## Getting Started
 - ssh in and install CLI::Wordpress on server to get the rawp command ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git``` _[or CLI::Wordpress]_
-- launch a new instance of Wordpress & setup ssl certificate ```rawp launch```
-- view your new Wordpress site at https://mydomain.com and configure basics
+- edit ```vi ~/.rawp-config/wordpress-launch.yaml``` with your domain name and wordpress configuration
+- launch a new instance of Wordpress & setup ssl certificate ```rawp setup && rawp launch```
+- view your new Wordpress site frontend at https://yourdomain.com and configure basics
 - setup ssl cert renewals via letsencrypt ```rawp renewal```
 
-## WP CLI Examples
+## wordpress-launch.yaml
+```yaml
+        instance:
+            domain-name: furnival.net
+            admin-email: 'hccs@furnival.net'
+            db-image: mysql:8.0
+            wordpress-image: wordpress:php8.0-fpm-alpine
+            webserver-image: nginx:1.15.12-alpine
+            certbot-image: certbot/certbot
+            wpcli-image: wordpress:cli-php8.0
+```
 
+## WP CLI Examples
 ```rawp wp '--info'```
 
 ```yaml
@@ -58,35 +70,23 @@ Success: 3 replacements to be made.
 ```
 
 ## CMDs
-- [x] launch
-- [x] renewal
-- [x] up
-- [x] wp 'cmd'    #run wpcli command - viz. https://developer.wordpress.org/cli/commands/
-- [x] down
-- [x] ps
-- [x] connect
-- [x] terminate   #rm volumes & reset
+- [x] setup       # position all config files for docker-compose and render wordpress-launch.yaml info
+- [x] launch      # docker-compose up staging server, if OK then get ssl and restart
+- [x] renewal     # configure crontab for ssl cert renewal
+- [x] up          # docker-compose up -d
+- [x] wp 'cmd'    # run wpcli command - viz. https://developer.wordpress.org/cli/commands/
+- [x] down        # docker-compose down
+- [x] ps          # docker-compose ps
+- [x] connect     # docker exec to wordpress server
+- [x] terminate   # rm volumes & reset
 
 ## Usage
 ```
   rawp <cmd> [<wp>]
   
-    <cmd>     One of <launch renewal up wp down ps connect terminate>
+    <cmd>     One of <setup launch renewal up wp down ps connect terminate>
     [<wp>]    A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ```
-
-##commands
-###1. launch
-
-This follows the advice on viz. https://www.digitalocean.com/community/tutorials/how-to-install-wordpress-with-docker-compose with a few exceptions:
-- docker-compose.yaml
-  - put in port 443 from the get go (even if not used)
-  - certbot does not run a command on docker-compose up -d to avoid exceeding the (5/week) limit of let's encrypt, instead the cerbot image is started (and allowed to exit) when it can be re-run with the needed commands:
-     - ```sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email steve@furnival.net --agree-tos --no-eff-email --staging -d furnival.net -d www.furnival.net``` (once on launch, eg. after termination)
-     - ```sudo docker-compose run certbot renew --dry-run```
-
-
-
 
 ### Copyright
 copyright(c) 2023 Henley Cloud Consulting Ltd.

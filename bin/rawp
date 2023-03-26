@@ -6,7 +6,7 @@ use CLI::Wordpress;
 enum Command <setup launch renewal up wp down ps connect terminate dist>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <launch renewal up wp down ps connect terminate>
+    Command $cmd,                           #= One of <setup launch renewal up wp down ps connect terminate>
     Str     $wp?,                           #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
     say $cmd;
