@@ -62,7 +62,7 @@ class Instance is export {
         sleep 5;
         qqx`sudo docker-compose ps`.say;
 
-        #iamerejh
+        #| set up letsencrypt certbot command
         my $certbot-cmd =
         qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email %i<admin-email> --agree-tos --no-eff-email --non-interactive -d %i<domain-name> -d www.%i<domain-name>`;
 
@@ -71,7 +71,6 @@ class Instance is export {
 
         #| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
-
         die 'staging Failed' unless @output[*-1] ~~ /"{%i<domain-name>}"/;
 
         #| proceed
@@ -87,6 +86,7 @@ class Instance is export {
         #| reconfigure webserver to ssl
         qqx`sudo docker-compose stop webserver`;
 
+        #| install certbot tls config
         qqx`sudo curl -sSLo nginx-conf/options-ssl-nginx.conf https://raw.githubusercontent.com/certbot/certbot/master/certbot-nginx/certbot_nginx/_internal/tls_configs/options-ssl-nginx.conf`;
 
         #| swap in ssl variant of nginx.conf
