@@ -5,25 +5,25 @@ use JSON::Fast;
 
 class Config is export {
     has %.y;
-    has $.domain-name;
-    has $.admin-email;
-    has $.db-image;
-    has $.wordpress-image;
-    has $.webserver-image;
-    has $.certbot-image;
-    has $.wpcli-image;
+#    has $.domain-name;
+#    has $.admin-email;
+#    has $.db-image;
+#    has $.wordpress-image;
+#    has $.webserver-image;
+#    has $.certbot-image;
+#    has $.wpcli-image;
 
     method TWEAK {
         my %config-yaml := load-yaml("$*HOME/.rawp-config/wordpress-launch.yaml".IO.slurp);
 
         %!y := %config-yaml;
-        $!domain-name     := %!y<instance><domain-name>;
-        $!admin-email     := %!y<instance><admin-email>;
-        $!db-image        := %!y<instance><db-image>;
-        $!wordpress-image := %!y<instance><wordpress-image>;
-        $!webserver-image := %!y<instance><webserver-image>;
-        $!certbot-image   := %!y<instance><certbot-image>;
-        $!wpcli-image     := %!y<instance><wpcli-image>;
+#        $!domain-name     := %!y<instance><domain-name>;
+#        $!admin-email     := %!y<instance><admin-email>;
+#        $!db-image        := %!y<instance><db-image>;
+#        $!wordpress-image := %!y<instance><wordpress-image>;
+#        $!webserver-image := %!y<instance><webserver-image>;
+#        $!certbot-image   := %!y<instance><certbot-image>;
+#        $!wpcli-image     := %!y<instance><wpcli-image>;
     }
 }
 
@@ -31,16 +31,15 @@ class Instance is export {
     has $.c = Config.new;
 
     method render( $file ) {
+        my $i := $!c.y<instance>;
 
         my $txt = $file.IO.slurp;
-        $txt .= subst( :g, /'%DOMAIN_NAME%'/, $!c.domain-name );
-        $txt .= subst( :g, /'%DB-IMAGE%'/, $!c.db-image );
-#        $txt .= subst( /'%DB-IMAGE%'/, "$!c.db-image");
-
-#        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$!c.wordpress-image/;
-#        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$!c.webserver-image/;
-#        $txt ~~ s:g/'%CERTBOT-IMAGE%'/$!c.certbot-image/;
-#        $txt ~~ s:g/'%WPCLI-IMAGE%'/$!c.wpcli-image/;
+        $txt .= subst( :g, /'%DOMAIN_NAME%'/, $i<domain-name> );
+        $txt .= subst( :g, /'%DB-IMAGE%'/, $i<db-image> );
+        $txt .= subst( :g, /'%WORDPRESS-IMAGE%'/, $i<wordpress-image> );
+        $txt .= subst( :g, /'%WEBSERVER-IMAGE%'/, $i<webserver-image> );
+        $txt .= subst( :g, /'%CERTBOT-IMAGE%'/, $i<certbot-image> );
+        $txt .= subst( :g, /'%WPCLI-IMAGE%'/, $i<wpcli-image> );
 
         $file.IO.spurt: $txt;
     }
