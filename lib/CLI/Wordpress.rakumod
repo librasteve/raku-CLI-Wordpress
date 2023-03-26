@@ -79,7 +79,7 @@ class Instance is export {
         qqx`sudo docker-compose ps`.say;
 
         my $certbot-cmd =
-        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email $!c.admin-email --agree-tos --no-eff-email --non-interactive -d $c!domain-name -d www.$c!domain-name`;
+        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email {$!c.admin-email} --agree-tos --no-eff-email --non-interactive -d {$c!domain-name} -d www.{$c!domain-name}`;
 
         #| try to load ssl cert '--staging'
         qqx`$certbot-cmd --staging`.say;
