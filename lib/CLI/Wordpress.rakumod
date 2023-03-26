@@ -72,7 +72,7 @@ class Instance is export {
         #| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
 
-        die 'staging Failed' unless @output[*-1] ~~ /"{%i<domain-name>}"/>;
+        die 'staging Failed' unless @output[*-1] ~~ /"{%i<domain-name>}"/;
 
         #| proceed
         say 'staging OK, now getting cert & switching to ssl nginx...';
