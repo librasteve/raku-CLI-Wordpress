@@ -11,16 +11,16 @@ class Instance is export {
     has $.c = Config.new;
 
     method render( $file ) {
-        my $i := $!c.y<instance>;
+        my %i := $!c.y<instance>;
 
         my $txt = $file.IO.slurp;
 
-        $txt ~~ s:g/'%DOMAIN_NAME%'/$i<domain-name>/;
-        $txt ~~ s:g/'%DB-IMAGE%'/$i<db-image>/;
-        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$i<wordpress-image>/;
-        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$i<webserver-image>/;
-        $txt ~~ s:g/'%CERTBOT-IMAGE%'/$i<certbot-image>/;
-        $txt ~~ s:g/'%WPCLI-IMAGE%'/$i<wpcli-image>/;
+        $txt ~~ s:g/'%DOMAIN_NAME%'/%i<domain-name>/;
+        $txt ~~ s:g/'%DB-IMAGE%'/%i<db-image>/;
+        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/%i<wordpress-image>/;
+        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/%i<webserver-image>/;
+        $txt ~~ s:g/'%CERTBOT-IMAGE%'/%i<certbot-image>/;
+        $txt ~~ s:g/'%WPCLI-IMAGE%'/%i<wpcli-image>/;
 
         $file.IO.spurt: $txt;
     }
@@ -52,6 +52,8 @@ class Instance is export {
     method launch {
         say 'start staging...';
 
+        my %i := $!c.y<instance>;
+
         chdir "$*HOME/wordpress";
 
         #| start services in no ssl mode
@@ -60,12 +62,13 @@ class Instance is export {
         sleep 5;
         qqx`sudo docker-compose ps`.say;
 
+        #iamerejh
         my $certbot-cmd =
-        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email {$!c.admin-email} --agree-tos --no-eff-email --non-interactive -d {$!c.domain-name} -d www.{$!c.domain-name}`;
+        qq`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email %i<admin-email>
+                          --agree-tos --no-eff-email --non-interactive -d %i<domain-name> -d www.%i<domain-name>`;
 
         #| try to load ssl cert '--staging'
         qqx`$certbot-cmd --staging`.say;
-        #qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email $!c.admin-email --agree-tos --no-eff-email --staging --non-interactive -d $c!domain-name -d www.$c!domain-name`.say;
 
         #| check if staging was successful
         my @output = qqx`sudo docker-compose exec webserver ls -la /etc/letsencrypt/live`;
@@ -81,7 +84,6 @@ class Instance is export {
 
         #| really load cert  '--force-renewal'
         qqx`$certbot-cmd --force-renewal`.say;
-        #qqx`sudo docker-compose run certbot certonly --webroot --webroot-path=/var/www/html --email $!c.admin-email --agree-tos --no-eff-email --force-renewal --non-interactive -d furnival.net -d www.furnival.net`.say;
 
         #| reconfigure webserver to ssl
         qqx`sudo docker-compose stop webserver`;
