@@ -6,4 +6,3 @@ instance:
     webserver-image: nginx:1.15.12-alpine
     certbot-image: certbot/certbot
     wpcli-image: wordpress:cli-php8.0
-
