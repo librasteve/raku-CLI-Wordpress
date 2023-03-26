@@ -33,6 +33,7 @@ class Instance is export {
     method render( $file ) {
 
         dd $!c;
+        say $!c.db-image;
 
         my $txt = $file.IO.slurp;
         $txt ~~ s:g/'%DOMAIN_NAME%'/"$!c.domain-name"/;
