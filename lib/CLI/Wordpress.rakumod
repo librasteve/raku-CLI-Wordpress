@@ -54,7 +54,7 @@ class Instance is export {
         copy %?RESOURCES<wordpress/docker-compose.yaml>.absolute,    "$*HOME/wordpress/docker-compose.yaml";
         copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,           "$*HOME/wordpress/ssl_renew.sh";
         copy %?RESOURCES<wordpress/ssl_renew>.absolute,              "$*HOME/wordpress/ssl_renew";
-        copy %?RESOURCES<wordpress/.dockerignore>.absolute,          "$*HOME/wordpress/.dockerignore";
+        copy %?RESOURCES<.dockerignore>.absolute,                    "$*HOME/.dockerignore";
 
         self.render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
         self.render( "$*HOME/wordpress/docker-compose.yaml" );
