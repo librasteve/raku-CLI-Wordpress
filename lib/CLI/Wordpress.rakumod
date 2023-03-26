@@ -29,12 +29,13 @@ class Config is export {
 
 class Instance is export {
     has $.c = Config.new;
+    dd $!c;
 
     method render( $file ) {
 
         my $txt = $file.IO.slurp;
-        $txt ~~ s:g/'%DOMAIN_NAME%'/$!c.domain-name/;
-        $txt ~~ s:g/'%DB-IMAGE%'/$!c.db-image/;
+        $txt ~~ s:g/'%DOMAIN_NAME%'/"$!c.domain-name"/;
+        $txt ~~ s:g/'%DB-IMAGE%'/"$!c.db-image"/;
         $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$!c.wordpress-image/;
         $txt ~~ s:g/'%WEBSERVER-IMAGE%'/$!c.webserver-image/;
         $txt ~~ s:g/'%CERTBOT-IMAGE%'/$!c.certbot-image/;
