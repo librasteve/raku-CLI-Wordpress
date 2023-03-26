@@ -36,8 +36,9 @@ class Instance is export {
         warn $!c.db-image;
 
         my $txt = $file.IO.slurp;
-#        $txt.subst /'%DOMAIN_NAME%'/, ~$!c.domain-name;
-        $txt.subst( /'%DB-IMAGE%'/, "$!c.db-image");
+        $txt .= subst /'%DOMAIN_NAME%'/, $!c.domain-name;
+        $txt .= subst( /'%DB-IMAGE%'/, "yo");
+#        $txt.subst( /'%DB-IMAGE%'/, "$!c.db-image");
 #        $txt ~~ s:g/'%DOMAIN_NAME%'/"$!c.domain-name"/;
 #        $txt ~~ s:g/'%DB-IMAGE%'/"$!c.db-image"/;
 #        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/$!c.wordpress-image/;
