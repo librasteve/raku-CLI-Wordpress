@@ -62,7 +62,6 @@ services:
     image: %WPCLI-IMAGE%
     container_name: wpcli
     restart: unless-stopped
-    user: 1000:1000
     command: tail -f /dev/null
     volumes:
       - wordpress:/var/www/html
