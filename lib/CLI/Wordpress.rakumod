@@ -39,6 +39,7 @@ class Instance is export {
 
         mkdir 'wordpress';
         mkdir 'wordpress/nginx-conf';
+        mkdir 'wordpress/php-conf';
         chdir 'wordpress';
 
         copy %?RESOURCES<wordpress/nginx-conf/nginx.nossl>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
