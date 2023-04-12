@@ -15,12 +15,21 @@ class Instance is export {
 
         my $txt = $file.IO.slurp;
 
-        $txt ~~ s:g/'%DOMAIN_NAME%'/%i<domain-name>/;
-        $txt ~~ s:g/'%DB-IMAGE%'/%i<db-image>/;
-        $txt ~~ s:g/'%WORDPRESS-IMAGE%'/%i<wordpress-image>/;
-        $txt ~~ s:g/'%WEBSERVER-IMAGE%'/%i<webserver-image>/;
-        $txt ~~ s:g/'%CERTBOT-IMAGE%'/%i<certbot-image>/;
-        $txt ~~ s:g/'%WPCLI-IMAGE%'/%i<wpcli-image>/;
+        $txt ~~ s:g/'%DOMAIN_NAME%'         /%i<domain-name>/;
+        #nginx-conf
+        $txt ~~ s:g/'%CLIENT_MAX_BODY_SIZE%'/%i<client_max_body_size>/;
+        #docker-compose.yaml
+        $txt ~~ s:g/'%DB-IMAGE%'            /%i<db-image>/;
+        $txt ~~ s:g/'%WORDPRESS-IMAGE%'     /%i<wordpress-image>/;
+        $txt ~~ s:g/'%WEBSERVER-IMAGE%'     /%i<webserver-image>/;
+        $txt ~~ s:g/'%CERTBOT-IMAGE%'       /%i<certbot-image>/;
+        $txt ~~ s:g/'%WPCLI-IMAGE%'         /%i<wpcli-image>/;
+        #php-conf
+        $txt ~~ s:g/'%FILE_UPLOADS%'        /%i<file_uploads>/;
+        $txt ~~ s:g/'%MEMORY_LIMIT%'        /%i<memory_limit>/;
+        $txt ~~ s:g/'%UPLOAD_MAX_FILESIZE%' /%i<upload_max_filesize>/;
+        $txt ~~ s:g/'%POST_MAX_SIZE%'       /%i<post_max_size>/;
+        $txt ~~ s:g/'%MAX_EXECUTION_TIME%'  /%i<max_execution_time>/;
 
         $file.IO.spurt: $txt;
     }
@@ -33,12 +42,14 @@ class Instance is export {
         chdir 'wordpress';
 
         copy %?RESOURCES<wordpress/nginx-conf/nginx.nossl>.absolute, "$*HOME/wordpress/nginx-conf/nginx.conf";
+        copy %?RESOURCES<wordpress/php-conf/uploads.ini>.absolute,   "$*HOME/wordpress/php-conf/uploads.ini";
         copy %?RESOURCES<wordpress/docker-compose.yaml>.absolute,    "$*HOME/wordpress/docker-compose.yaml";
         copy %?RESOURCES<wordpress/ssl_renew.sh>.absolute,           "$*HOME/wordpress/ssl_renew.sh";
         copy %?RESOURCES<wordpress/ssl_renew>.absolute,              "$*HOME/wordpress/ssl_renew";
         copy %?RESOURCES<.dockerignore>.absolute,                    "$*HOME/.dockerignore";
 
         self.render( "$*HOME/wordpress/nginx-conf/nginx.conf" );
+        self.render( "$*HOME/wordpress/php-conf/uploads.ini" );
         self.render( "$*HOME/wordpress/docker-compose.yaml" );
 
         my $text = qq:to/END/;

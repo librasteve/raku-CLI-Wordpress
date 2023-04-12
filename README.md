@@ -31,6 +31,8 @@ instance:
 ```
 
 ## WP CLI Examples
+More examples can be found [here](./literature/wpcli.md)
+
 ```rawp wp '--info'```
 
 ```yaml

@@ -14,6 +14,12 @@ class Build {
             webserver-image: nginx:1.15.12-alpine
             certbot-image: certbot/certbot
             wpcli-image: wordpress:cli-php8.0
+            file_uploads: On
+            memory_limit: 64M
+            upload_max_filesize: 64M
+            post_max_size: 64M
+            max_execution_time: 600
+            client_max_body_size: 64M
         END
 
         qqx`echo \'$text\' > wordpress-launch.yaml`;
