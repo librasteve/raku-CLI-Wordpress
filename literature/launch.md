@@ -2,19 +2,27 @@
 
 ## wordpress-launch.yaml
 
-On ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git```, the file wordpress-launch.yaml is populated. It contains site-specific configuration and should be edited to match your domain name, etc before setup is run.
+On ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git```, the file wordpress-launch.yaml is populated. It contains site-specific settings and should be edited to match your domain name, etc before setup is run.
 
 ```yaml
 #~/.rawp-config/wordpress-launch.yaml
 instance:
-    domain-name: furnival.net
-    admin-email: 'hccs@furnival.net'
-    db-image: mysql:8.0
-    wordpress-image: wordpress:php8.0-fpm-alpine
-    webserver-image: nginx:1.15.12-alpine
-    certbot-image: certbot/certbot
-    wpcli-image: wordpress:cli-php8.0
+  domain-name: your_domain
+  admin-email: 'admin@your_domain'
+  db-image: mysql:8.0
+  wordpress-image: wordpress:php8.0-fpm-alpine
+  webserver-image: nginx:1.15.12-alpine
+  certbot-image: certbot/certbot
+  wpcli-image: wordpress:cli-php8.0
+  file_uploads: On
+  memory_limit: 64M
+  upload_max_filesize: 64M
+  post_max_size: 64M
+  max_execution_time: 600
+  client_max_body_size: 64M
 ```
+
+These settings are then rendered into the nginx-conf, php-conf and docker-compose.yaml files.
 
 _Care should be taken to preserve any changes to this file in the event of a zef reinstall_
 
@@ -73,7 +81,7 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name your_domain www.your_domain;
+    server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
 
     index index.php index.html index.htm;
 
@@ -101,12 +109,12 @@ server {
     location ~ /\.ht {
         deny all;
     }
-    
-    location = /favicon.ico { 
-        log_not_found off; access_log off; 
+
+    location = /favicon.ico {
+        log_not_found off; access_log off;
     }
-    location = /robots.txt { 
-        log_not_found off; access_log off; allow all; 
+    location = /robots.txt {
+        log_not_found off; access_log off; allow all;
     }
     location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ {
         expires max;
@@ -116,79 +124,83 @@ server {
 ```
 
 If OK, this is swapped to the ssl version & restarted...
+... the line client_max_body_size is rendered according to wordpress-launch.yaml
 
 ```apacheconf
 #~/wordpress/nginx-conf/nginx.conf
 server {
-        listen 80;
-        listen [::]:80;
+	listen 80;
+	listen [::]:80;
 
-        server_name your_domain www.your_domain;
+	server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
 
-        location ~ /.well-known/acme-challenge {
-                allow all;
-                root /var/www/html;
-        }
+	location ~ /.well-known/acme-challenge {
+		allow all;
+		root /var/www/html;
+	}
 
-        location / {
-                rewrite ^ https://$host$request_uri? permanent;
-        }
+	location / {
+		rewrite ^ https://$host$request_uri? permanent;
+	}
 }
 
 server {
-        listen 443 ssl http2;
-        listen [::]:443 ssl http2;
-        
-        server_name your_domain www.your_domain;
+	listen 443 ssl http2;
+	listen [::]:443 ssl http2;
 
-        index index.php index.html index.htm;
+	server_name %DOMAIN_NAME% www.%DOMAIN_NAME%;
 
-        root /var/www/html;
+	index index.php index.html index.htm;
 
-        server_tokens off;
+	root /var/www/html;
 
-        ssl_certificate /etc/letsencrypt/live/furnival.net/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/furnival.net/privkey.pem;
+	server_tokens off;
 
-        include /etc/nginx/conf.d/options-ssl-nginx.conf;
+    ssl_certificate /etc/letsencrypt/live/%DOMAIN_NAME%/fullchain.pem;
+	ssl_certificate_key /etc/letsencrypt/live/%DOMAIN_NAME%/privkey.pem;
 
-        add_header X-Frame-Options "SAMEORIGIN" always;
-        add_header X-XSS-Protection "1; mode=block" always;
-        add_header X-Content-Type-Options "nosniff" always;
-        add_header Referrer-Policy "no-referrer-when-downgrade" always;
-        add_header Content-Security-Policy "default-src * data: 'unsafe-eval' 'unsafe-inline'" always;
-        # add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
-        # enable strict transport security only if you understand the implications
+	include /etc/nginx/conf.d/options-ssl-nginx.conf;
 
-        location / {
-                try_files $uri $uri/ /index.php$is_args$args;
-        }
+	add_header X-Frame-Options "SAMEORIGIN" always;
+	add_header X-XSS-Protection "1; mode=block" always;
+	add_header X-Content-Type-Options "nosniff" always;
+	add_header Referrer-Policy "no-referrer-when-downgrade" always;
+	add_header Content-Security-Policy "default-src * data: 'unsafe-eval' 'unsafe-inline'" always;
+	# add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
+	# enable strict transport security only if you understand the implications
 
-        location ~ \.php$ {
-                try_files $uri =404;
-                fastcgi_split_path_info ^(.+\.php)(/.+)$;
-                fastcgi_pass wordpress:9000;
-                fastcgi_index index.php;
-                include fastcgi_params;
-                fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
-                fastcgi_param PATH_INFO $fastcgi_path_info;
-        }
+    client_max_body_size %CLIENT_MAX_BODY_SIZE%;
 
-        location ~ /\.ht {
-                deny all;
-        }
-        
-        location = /favicon.ico { 
-                log_not_found off; access_log off; 
-        }
-        location = /robots.txt { 
-                log_not_found off; access_log off; allow all; 
-        }
-        location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ {
-                expires max;
-                log_not_found off;
-        }
+	location / {
+		try_files $uri $uri/ /index.php$is_args$args;
+	}
+
+	location ~ \.php$ {
+		try_files $uri =404;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass wordpress:9000;
+		fastcgi_index index.php;
+		include fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		fastcgi_param PATH_INFO $fastcgi_path_info;
+	}
+
+	location ~ /\.ht {
+		deny all;
+	}
+
+	location = /favicon.ico {
+		log_not_found off; access_log off;
+	}
+	location = /robots.txt {
+		log_not_found off; access_log off; allow all;
+	}
+	location ~* \.(css|gif|ico|jpeg|jpg|js|png)$ {
+		expires max;
+		log_not_found off;
+	}
 }
+
 ```
 
 ###3. Docker Compose Services
@@ -198,11 +210,11 @@ The set of services is predefined by the docker-compose.yaml. The specific docke
 
 ```yaml
 #`/wordpress/docker-compose.yaml
-version: '3'
+version: "3"
 
 services:
   db:
-    image: mysql:8.0
+    image: %DB-IMAGE%
     container_name: db
     restart: unless-stopped
     env_file: .env
@@ -210,14 +222,14 @@ services:
       - MYSQL_DATABASE=wordpress
     volumes:
       - dbdata:/var/lib/mysql
-    command: '--default-authentication-plugin=mysql_native_password'
+    command: "--default-authentication-plugin=mysql_native_password"
     networks:
       - app-network
 
   wordpress:
     depends_on:
       - db
-    image: wordpress:5.1.1-fpm-alpine
+    image: %WORDPRESS-IMAGE%
     container_name: wordpress
     restart: unless-stopped
     env_file: .env
@@ -228,17 +240,19 @@ services:
       - WORDPRESS_DB_NAME=wordpress
     volumes:
       - wordpress:/var/www/html
+      - ./php-conf/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     networks:
       - app-network
 
   webserver:
     depends_on:
       - wordpress
-    image: nginx:1.15.12-alpine
+    image: %WEBSERVER-IMAGE%
     container_name: webserver
     restart: unless-stopped
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - wordpress:/var/www/html
       - ./nginx-conf:/etc/nginx/conf.d
@@ -249,19 +263,18 @@ services:
   certbot:
     depends_on:
       - webserver
-    image: certbot/certbot
+    image: %CERTBOT-IMAGE%
     container_name: certbot
     volumes:
       - certbot-etc:/etc/letsencrypt
       - wordpress:/var/www/html
-    command: certonly --webroot --webroot-path=/var/www/html --email $admin-email --agree-tos --no-eff-email --staging -d $domain-name -d www.$domain-name
-    
+
   wpcli:
-    container_name: wpcli
     depends_on:
       - wordpress
-    image: wordpress:cli
-    user: 1000:1000
+    image: %WPCLI-IMAGE%
+    container_name: wpcli
+    restart: unless-stopped
     command: tail -f /dev/null
     volumes:
       - wordpress:/var/www/html
@@ -272,6 +285,8 @@ services:
       - WORDPRESS_DB_NAME=wordpress
     profiles:
       - dev
+    networks:
+      - app-network
 
 volumes:
   certbot-etc:
@@ -315,7 +330,7 @@ drwxr-xr-x    9 root     root          4096 May 10 15:45 ..
 drwxr-xr-x    2 root     root          4096 May 10 15:45 your_domain
 ```
 
-#### Run cerbot production command
+#### Run certbot production command
 Now that you know your request will be successful, you can edit the certbot service definition to remove the --staging flag.
 
 ```yaml

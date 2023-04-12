@@ -39,7 +39,7 @@ server {
 	# add_header Strict-Transport-Security "max-age=31536000; includeSubDomains; preload" always;
 	# enable strict transport security only if you understand the implications
 
-    client_max_body_size 100M;
+    client_max_body_size %CLIENT_MAX_BODY_SIZE%;
 
 	location / {
 		try_files $uri $uri/ /index.php$is_args$args;
