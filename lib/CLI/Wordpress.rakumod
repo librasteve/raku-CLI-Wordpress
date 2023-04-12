@@ -131,9 +131,9 @@ class Instance is export {
         qqx`sudo docker-compose up -d --force-recreate --no-deps wpcli`;
     }
 
-    method wp(:$wp) {
+    method wp(:$str) {
         chdir "$*HOME/wordpress";
-        qqx`sudo docker exec wpcli wp $wp`.say
+        qqx`sudo docker exec wpcli wp $str`.say
     }
 
     method down {

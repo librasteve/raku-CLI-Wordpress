@@ -1,4 +1,14 @@
 ## WP CLI Examples
+viz. https://developer.wordpress.org/cli/commands/
+
+```rawp wp '--help'```
+
+Run ```rawp wp 'help <command>'``` to get more information on a specific command.
+
+```rawp wp 'core version'```
+
+6.2
+
 ```rawp wp '--info'```
 
 ```yaml
@@ -37,7 +47,11 @@ wp_users	display_name	0	SQL
 Success: 3 replacements to be made.
 ```
 
-```rawp wp 'plugin install "increase-maximum-upload-file-size"'```
+
+
+### Plugins
+
+Zip file plugins need to be manually uploaded via the front end.
 
 ```rawp wp 'plugin list'```
 
@@ -45,8 +59,11 @@ Success: 3 replacements to be made.
 name	status	update	version
 akismet	inactive	none	5.1
 hello	inactive	none	1.7.2
-increase-maximum-upload-file-size	inactive	none	1.0
+updraftplus	inactive	none	2.23.3.1
 ```
 ```rawp wp 'plugin activate "increase-maximum-upload-file-size"'```
 ```rawp wp 'plugin delete "increase-maximum-upload-file-size"'```
 
+### Volumes
+
+Use ```rawp connect``` to get this hint... ```sudo docker exec -it wordpress "/bin/bash"``` to enter the running wordpress filesystem

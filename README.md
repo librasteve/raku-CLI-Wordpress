@@ -82,19 +82,48 @@ Success: 3 replacements to be made.
 - [x] launch      # docker-compose up staging server, if OK then get ssl and restart
 - [x] renewal     # configure crontab for ssl cert renewal
 - [x] up          # docker-compose up -d
-- [x] wp 'cmd'    # run wpcli command - viz. https://developer.wordpress.org/cli/commands/
 - [x] down        # docker-compose down
 - [x] ps          # docker-compose ps
-- [x] connect     # docker exec to wordpress server
+- [x] connect     # docker exec to wordpress server (get cmd as string)
+- [x] wp 'cmd'    # run wpcli command - viz. https://developer.wordpress.org/cli/commands/
 - [x] terminate   # rm volumes & reset
 
 ## Usage
 ```
   rawp <cmd> [<wp>]
   
-    <cmd>     One of <setup launch renewal up wp down ps connect terminate>
+    <cmd>     One of <setup launch renewal up down ps connect wp terminate>
     [<wp>]    A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ```
+
+## TODOs
+- [ ] add git repo for /var/www/html (rawp git setup, clone, status, commit, push && pull)
+
+  git:
+  depends_on:
+  - wordpress
+  image: ubuntu:latest
+  container_name: git
+  restart: unless-stopped
+  command: tail -f /dev/null
+  volumes:
+  - wordpress:/var/www/html
+  networks:
+  - app-network
+
+
+
+sudo docker exec -it git "/bin/bash"
+apt-get update
+apt-get upgrade -y
+apt-get install git -y
+cd /var/www/html
+
+https://stackoverflow.com/questions/9864728/how-to-get-git-to-clone-into-current-directory
+rm -rf *
+git init .
+git remote add -t \* -f origin <repository-url>
+git checkout master
 
 ### Copyright
 copyright(c) 2023 Henley Cloud Consulting Ltd.
