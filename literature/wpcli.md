@@ -66,4 +66,8 @@ updraftplus	inactive	none	2.23.3.1
 
 ### Volumes
 
-Use ```rawp connect``` to get this hint... ```sudo docker exec -it wordpress "/bin/bash"``` to enter the running wordpress filesystem
+Use ```rawp connect``` to get this hint... ```sudo docker exec -it --working-dir /var/www/html wordpress "/bin/bash"``` to enter the running wordpress filesystem
+
+rawp wp 'plugin activate updraftplus'
+rawp wp 'plugin get updraftplus'
+rawp wp 'option list --search="updraft*"'
