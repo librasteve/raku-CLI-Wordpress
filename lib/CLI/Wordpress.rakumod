@@ -150,6 +150,10 @@ class Instance is export {
         say 'sudo docker exec -it wordpress "/bin/bash"'
     }
 
+    method git {
+        say 'sudo docker exec -it --workdir /var/www/html git "/bin/bash"'
+    }
+
     method terminate {
         chdir "$*HOME/wordpress";
         qqx`sudo docker-compose down -v`.say

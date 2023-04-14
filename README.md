@@ -111,19 +111,79 @@ Success: 3 replacements to be made.
   networks:
   - app-network
 
-
-
+## first run
+  
+### connect
 sudo docker exec -it git "/bin/bash"
+
+### install git
 apt-get update
 apt-get upgrade -y
-apt-get install git -y
+apt-get install vim git curl wget libicu-dev gnupg pass -y
+
+### make new empty repo (via github web)
+
+### push wp to gh
 cd /var/www/html
+git config --global user.email 'p6steve@furnival.net'
+git config --global user.name 'p6steve'
+
+git init
+git branch -m main
+git config --global --add safe.directory /var/www/html
+git add --all
+git commit -m "clone from image"
+git remote add origin https://github.com/p6steve/wordpress-6.2-php8.0-fpm-alpine.git
+git push -u origin main
+
+### install gcm
+cd ~
+wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.0.935/gcm-linux_amd64.2.0.935.tar.gz
+tar -xvf gcm-linux_amd64.2.0.935.tar.gz -C /usr/local/bin
+git-credential-manager configure
+git config --global credential.credentialStore gpg
+gpg --gen-key
+#### manual keygen
+pass init p6steve
+
+
+
+### operation
+then...
+echo 'test' | test
+git push
+## manual credential entry (first time)
+
+
+rawp git ===> sudo docker exec -it --workdir /var/www/html git "/bin/bash"
+
+
+
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "echo 'test3' > test3 && ls"
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "git add test2"
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "git status"
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "git commit -m 'ho'"
+
+sudo docker exec -t --workdir /var/www/html git tty   ($TTY)
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "export GPG_TTY=$TTY"
+sudo docker exec -t --workdir /var/www/html git /bin/bash -c "git push"
+
 
 https://stackoverflow.com/questions/9864728/how-to-get-git-to-clone-into-current-directory
 rm -rf *
 git init .
-git remote add -t \* -f origin <repository-url>
-git checkout master
+git config --global --add safe.directory /var/www/html
+git remote add -t \* -f origin https://github.com/p6steve/wordpress-6.2.git
+git checkout main
+chown -R www-data:www-data *
+
+iamerejh sort out wp-config && .htaccess
+... git upload fpm (live) version
+
+
+
+
+
 
 ### Copyright
 copyright(c) 2023 Henley Cloud Consulting Ltd.

@@ -3,10 +3,10 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <setup launch renewal up down ps connect wp terminate dist>;
+enum Command <setup launch renewal up down ps wp connect git terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <setup launch renewal up down ps connect wp terminate>
+    Command $cmd,                           #= One of <setup launch renewal up down ps wp connect git terminate>
     Str     $str?,                          #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
     say $cmd;
@@ -24,23 +24,24 @@ sub MAIN(
         when 'up' {
             Instance.new.up
         }
-        when 'wp' {
-            say 'please provide a valid wpcli cmd string' without $str;
-            Instance.new.wp(:$str)
-        }
         when 'down' {
             Instance.new.down
         }
         when 'ps' {
             Instance.new.ps
         }
+        when 'wp' {
+            say 'please provide a valid wpcli cmd string' without $str;
+            Instance.new.wp(:$str)
+        }
         when 'connect' {
             Instance.new.connect
+        }
+        when 'git' {
+            Instance.new.git
         }
         when 'terminate' {
             Instance.new.terminate
         }
     }
 }
-
-
