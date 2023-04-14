@@ -147,7 +147,7 @@ class Instance is export {
     }
 
     method connect {
-        say 'sudo docker exec -it wordpress "/bin/bash"'
+        say 'sudo docker exec -it --workdir /var/www/html wordpress "/bin/bash"'
     }
 
     method git {
