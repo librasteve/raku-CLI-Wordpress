@@ -154,6 +154,30 @@ class Instance is export {
         say 'sudo docker exec -it --workdir /var/www/html git "/bin/bash"'
     }
 
+    #| install and configure git & gcm in git service
+    method git-setup {
+        sub exec($cmd, $wd='/') {
+            my $preamble = qq|sudo docker exec -t --workdir $wd git /bin/bash -c|;
+            qqx`$preamble $cmd`.say;
+        }
+
+        exec q|"apt-get update && apt-get upgrade -y"|;
+        exec q|"apt-get install vim git curl wget libicu-dev gnupg pass -y"|;
+        exec q|"wget https://github.com/git-ecosystem/git-credential-manager/releases/download/v2.0.935/gcm-linux_amd64.2.0.935.tar.gz"|;
+        exec q|"tar -xvf gcm-linux_amd64.2.0.935.tar.gz -C /usr/local/bin"|;
+        exec q|"git-credential-manager configure"|;
+        exec q|"git config --global credential.credentialStore gpg"|;
+        exec q|"git config --global init.defaultBranch main"|;
+        exec q|"git config --global --add safe.directory /var/www/html"|;
+        exec q|"echo 'GPG_TTY=\$(tty)' >> ~/.bashrc"|;
+    }
+
+    #| chown all wp files to www-data:www-data in wordpress service
+    method git-chown {
+        qqx`sudo docker exec -t --workdir /var/www/html wordpress /bin/bash -c "chown -R www-data:www-data *"`.say;
+        qqx`sudo docker exec -t --workdir /var/www/html wordpress /bin/bash -c "chown -R www-data:www-data .htaccess"`.say;
+    }
+
     method terminate {
         chdir "$*HOME/wordpress";
         qqx`sudo docker-compose down -v`.say

@@ -287,6 +287,18 @@ services:
       - dev
     networks:
       - app-network
+        
+  git:
+    depends_on:
+      - wordpress
+    image: ubuntu:latest
+    container_name: git
+    restart: unless-stopped
+    command: tail -f /dev/null
+    volumes:
+      - wordpress:/var/www/html
+    networks:
+      - app-network
 
 volumes:
   certbot-etc:

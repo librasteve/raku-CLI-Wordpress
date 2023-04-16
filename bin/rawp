@@ -3,10 +3,10 @@
 use lib '../lib';
 use CLI::Wordpress;
 
-enum Command <setup launch renewal up down ps wp connect git terminate>;
+enum Command <setup launch renewal up down ps wp connect git git-setup git-chown terminate>;
 
 sub MAIN(
-    Command $cmd,                           #= One of <setup launch renewal up down ps wp connect git terminate>
+    Command $cmd,                           #= One of <setup launch renewal up down ps wp connect git git-setup git-chown terminate>
     Str     $str?,                          #= A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ) {
     say $cmd;
@@ -39,6 +39,12 @@ sub MAIN(
         }
         when 'git' {
             Instance.new.git
+        }
+        when 'git-setup' {
+            Instance.new.git-setup
+        }
+        when 'git-chown' {
+            Instance.new.git-chown:w
         }
         when 'terminate' {
             Instance.new.terminate
