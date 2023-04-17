@@ -76,31 +76,49 @@ wp_users	display_name	0	SQL
 Success: 3 replacements to be made.
 ```
 
+## WP Git Example
+More details can be found [here](./literature/wpgit.md)
+
+Setup git & gcm...
+- ```rawp git-setup```
+- ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
+- ```pass init p6steve```
+
+This typical sequence of git operations can be performed from the command line of your Wordpress host server:
+- ```rawp ps``` <= check that the ```git``` service is ```Up```
+- ```rawp git``` <= use the result to connect to the git service, then for example...
+    - ```export GPG_TTY=$(tty)``` <= tell the gpg key which tty we are using
+    - ```echo 'test' > test```
+    - ```git add test```
+    - ```git status```
+    - ```git pull```
+    - ```git commit -m 'note'```
+    - ```git push```
+- ```exit``` <= when done return to the main Wordpress server prompt
+- ```rawp git-chown``` <= fix up Wordpress file permissions (IMPORTANT)
+
+
 ## CMDs
-- [x] setup       # position all config files for docker-compose and render wordpress-launch.yaml info
+- [x] setup       # prepare config files from wordpress-launch.yaml
 - [x] launch      # docker-compose up staging server, if OK then get ssl and restart
 - [x] renewal     # configure crontab for ssl cert renewal
 - [x] up          # docker-compose up -d
 - [x] down        # docker-compose down
 - [x] ps          # docker-compose ps
-- [x] connect     # docker exec to wordpress server (get cmd as string)
+- [x] connect     # docker exec to _wordpress_ service (get cmd as string)
 - [x] wp 'cmd'    # run wpcli command - viz. https://developer.wordpress.org/cli/commands/
+- [x] git         # docker exec to _git_ service (get cmd as string)
+- [x] git-setup   # install git & gcm on running git server
+- [x] git-chown   # adjust file permissions
 - [x] terminate   # rm volumes & reset
-
-- [x] ```rawp git``` will give this connection str=> ```sudo docker exec -it --workdir /var/www/html git "/bin/bash"```
-- [ ] ```rawp git-setup``` includes manual gpg keygen steps for [git credentials manager](https://docs.github.com/en/get-started/getting-started-with-git/caching-your-github-credentials-in-git)
-- [ ] ```rawp git-chown``` applies user www-data:www-data via wordpress service
 
 ## Usage
 ```
   rawp <cmd> [<wp>]
   
-    <cmd>     One of <setup launch renewal up down ps connect wp terminate>
+    <cmd>     One of <setup launch renewal up down ps wp connect git git-setup git-chown terminate>
     [<wp>]    A valid wp cli cmd (viz. https://developer.wordpress.org/cli/commands/)
 ```
-
-
-
 
 ### Copyright
 copyright(c) 2023 Henley Cloud Consulting Ltd.
