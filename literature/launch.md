@@ -1,4 +1,4 @@
-# CLI::Wordpress Launch Implementation Details
+# CLI::Wordpress Launch Details
 
 ## wordpress-launch.yaml
 

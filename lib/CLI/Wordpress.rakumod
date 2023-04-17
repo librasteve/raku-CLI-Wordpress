@@ -170,6 +170,8 @@ class Instance is export {
         exec q|"git config --global init.defaultBranch main"|;
         exec q|"git config --global --add safe.directory /var/www/html"|;
         exec q|"echo 'GPG_TTY=\$(tty)' >> ~/.bashrc"|;
+
+        say 'now ssh into the git service and go ```gpg --gen-key``` and ```pass init your_name```';
     }
 
     #| chown all wp files to www-data:www-data in wordpress service
