@@ -79,14 +79,18 @@ Success: 3 replacements to be made.
 ## WP Git Example
 More details can be found [here](./literature/wpgit.md)
 
-Setup git & gcm...
-- ```rawp git-setup```
-- ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
-- ```pass init p6steve```
-
-This typical sequence of git operations can be performed from the command line of your Wordpress host server:
+Setup git & gcm (first time only)...
 - ```rawp ps``` <= check that the ```git``` service is ```Up```
-- ```rawp git``` <= use the result to connect to the git service, then for example...
+- ```rawp git-setup```
+- ```rawp git``` <= connect to the git service, then...
+  - ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
+  - ```pass init p6steve```
+- ```exit``` <= when done return to the main Wordpress server prompt
+- ```rawp git-chown``` <= fix up Wordpress file permissions (IMPORTANT)
+
+Typical git sequence...
+
+- ```rawp git``` <= connect to the git service, then...
     - ```export GPG_TTY=$(tty)``` <= tell the gpg key which tty we are using
     - ```echo 'test' > test```
     - ```git add test```
