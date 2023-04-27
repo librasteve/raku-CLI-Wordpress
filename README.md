@@ -84,7 +84,7 @@ Setup git & gcm (first time only)...
 - ```rawp git-setup```
 - ```rawp git``` <= connect to the git service, then...
   - ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
-  - ```pass init p6steve```
+  - ```pass init your_name```
 - ```exit``` <= when done return to the main Wordpress server prompt
 - ```rawp git-chown``` <= fix up Wordpress file permissions (IMPORTANT)
 
