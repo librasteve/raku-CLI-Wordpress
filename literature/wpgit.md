@@ -39,7 +39,7 @@ When you ```rawp launch``` a Wordpress installation, it uses the docker-compose.
 
 - ```rawp git-setup```
 - ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
-- ```pass init p6steve```
+- ```pass init your_name```
 
 ## Handy Examples
 
