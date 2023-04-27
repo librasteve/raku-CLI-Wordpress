@@ -66,7 +66,6 @@ First make an empty repo via GitHub web, then:
 
 ```shell
 export GPG_TTY=$(tty)
-cd /var/www/html
 git init .
 git branch -m main
 git config --global --add safe.directory /var/www/html
