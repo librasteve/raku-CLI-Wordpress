@@ -53,7 +53,7 @@ You are welcome to fork this base repo (via github web), or to overwrite one of 
 export GPG_TTY=$(tty)
 rm -rf *
 git init .
-git remote add -t \* -f origin https://github.com/p6steve/wp6.2-sarahroeassociates.co.uk.git
+git remote add -t \* -f origin https://github.com/p6steve/wordpress-6.2-php8.0-fpm-alpine.git
 git checkout main
 ````
 
