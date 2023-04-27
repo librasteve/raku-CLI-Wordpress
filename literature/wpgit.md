@@ -51,7 +51,6 @@ You are welcome to fork this base repo (via github web), or to overwrite one of 
 
 ```shell
 export GPG_TTY=$(tty)
-cd /var/www/html
 rm -rf *
 git init .
 git remote add -t \* -f origin https://github.com/p6steve/wp6.2-sarahroeassociates.co.uk.git
