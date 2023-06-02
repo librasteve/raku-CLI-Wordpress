@@ -1,4 +1,4 @@
-unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (librasteve@furnival.net)>;
+unit module CLI::Wordpress:ver<0.0.2>:auth<Steve Roe (librasteve@furnival.net)>;
 
 use YAMLish;
 use JSON::Fast;
