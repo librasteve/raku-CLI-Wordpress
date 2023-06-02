@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "perl": "6.d",
   "authors": [
-    "p6steve"
+    "librasteve"
   ],
-  "auth": "zef:p6steve",
+  "auth": "zef:librasteve",
   "depends": [
     "YAMLish",
     "JSON::Fast"
@@ -32,5 +32,5 @@
     "wpcli"
   ],
   "api": "1",
-  "source-url": "git://github.com/p6steve/raku-CLI-Wordpress.git"
+  "source-url": "git://github.com/librasteve/raku-CLI-Wordpress.git"
 }

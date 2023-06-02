@@ -2,7 +2,7 @@
 
 ## wordpress-launch.yaml
 
-On ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git```, the file wordpress-launch.yaml is populated. It contains site-specific settings and should be edited to match your domain name, etc before setup is run.
+On ```zef install https://github.com/librasteve/raku-CLI-Wordpress.git```, the file wordpress-launch.yaml is populated. It contains site-specific settings and should be edited to match your domain name, etc before setup is run.
 
 ```yaml
 #~/.rawp-config/wordpress-launch.yaml

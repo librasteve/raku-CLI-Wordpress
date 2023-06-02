@@ -1,4 +1,4 @@
-unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (p6steve@furnival.net)>;
+unit module CLI::Wordpress:ver<0.0.1>:auth<Steve Roe (librasteve@furnival.net)>;
 
 use YAMLish;
 use JSON::Fast;
@@ -171,7 +171,7 @@ class Instance is export {
         exec q|"git config --global --add safe.directory /var/www/html"|;
         exec q|"echo 'GPG_TTY=\$(tty)' >> ~/.bashrc"|;
 
-        say 'now ssh into the git service and go ```gpg --gen-key``` and ```pass init your_name```';
+        say 'now docker exec into the git service and go ```gpg --gen-key``` and ```pass init your_name```';
     }
 
     #| chown all wp files to www-data:www-data in wordpress service

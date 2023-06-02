@@ -45,23 +45,27 @@ When you ```rawp launch``` a Wordpress installation, it uses the docker-compose.
 
 ### Pull (modified) Wordpress files from a GitHub repo
 
-The default rawp Wordpress installation is based on the ```wordpress:php8.0-fpm-alpine``` Docker [image](https://hub.docker.com/_/wordpress) which is available as a base github repo [here](https://github.com/p6steve/wordpress-6.2-php8.0-fpm-alpine)
+The default rawp Wordpress installation is based on the ```wordpress:php8.0-fpm-alpine``` Docker [image](https://hub.docker.com/_/wordpress) which is available as a base github repo [here](https://github.com/librasteve/wordpress-6.2-php8.0-fpm-alpine)
 
 You are welcome to fork this base repo (via github web), or to overwrite one of your own via these steps at the git server prompt:
 
+First, ```rawp git``` <= **connect** to the ```git``` service, then...
+
 ```shell
 export GPG_TTY=$(tty)
-rm -rf *
+rm -rf * && rm .htaccess
 git init .
-git remote add -t \* -f origin https://github.com/p6steve/wordpress-6.2-php8.0-fpm-alpine.git
+git remote add -t \* -f origin https://github.com/librasteve/wordpress-6.2-php8.0-fpm-alpine.git
 git checkout main
 ````
 
-Don't forget to ```rawp git-chown``` when you exit.
+Finally, ```rawp git-chown``` when you exit.
 
 ### Push (modified) Wordpress files to a (new) GitHub repo
 
-First make an empty repo via GitHub web, then:
+First, make an empty repo via GitHub web
+
+Then, ```rawp git``` <= **connect** to the ```git``` service, and...
 
 ```shell
 export GPG_TTY=$(tty)
@@ -70,7 +74,7 @@ git branch -m main
 git config --global --add safe.directory /var/www/html
 git add --all
 git commit -m "clone from image"
-git remote add origin https://github.com/p6steve/wordpress-6.2-php8.0-fpm-alpine.git
+git remote add origin https://github.com/librasteve/wordpress-6.2-php8.0-fpm-alpine.git
 git push -u origin main
 ```
 

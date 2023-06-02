@@ -7,12 +7,12 @@ This module provides a simple abstraction to the Wordpress command line interfac
 If you encounter a feature you want that's not implemented by this module (and there are many), please consider sending a pull request.
 
 ## Prerequisites
-- ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/p6steve/raku-CLI-AWS-EC2-Simple))
+- ubuntu server with docker, docker-compose, raku and zef (e.g. by using [raws-ec2](https://github.com/librasteve/raku-CLI-AWS-EC2-Simple))
 - located at a static IP address (e.g. via ```raws-ec2 --eip launch```) with ssh access (e.g. via ```raws-ec2 connect```)
 - domain name DNS set with A records @ and www to the target's IP address
 
 ## Getting Started
-- ssh in and install CLI::Wordpress on server to get the rawp command ```zef install https://github.com/p6steve/raku-CLI-Wordpress.git``` _[or CLI::Wordpress]_
+- ssh in and install CLI::Wordpress on server to get the rawp command ```zef install https://github.com/librasteve/raku-CLI-Wordpress.git``` _[or CLI::Wordpress]_
 - edit ```vi ~/.rawp-config/wordpress-launch.yaml``` with your domain name and wordpress configuration
 - launch a new instance of Wordpress & setup ssl certificate with ```rawp setup && rawp launch && rawp renewal```
 - configure your new Wordpress site frontend at https://yourdomain.com
@@ -82,7 +82,7 @@ More details can be found [here](./literature/wpgit.md)
 Setup git & gcm (first time only)...
 - ```rawp ps``` <= check that the ```git``` service is ```Up```
 - ```rawp git-setup```
-- ```rawp git``` <= connect to the git service, then...
+- ```rawp git``` <= **connect** to the git service, then...
   - ```gpg --gen-key``` <= start manual GNU GPG keygen procedure
   - ```pass init your_name```
 - ```exit``` <= when done return to the main Wordpress server prompt
@@ -90,7 +90,7 @@ Setup git & gcm (first time only)...
 
 Typical git sequence...
 
-- ```rawp git``` <= connect to the git service, then...
+- ```rawp git``` <= **connect** to the git service, then...
     - ```export GPG_TTY=$(tty)``` <= tell the gpg key which tty we are using
     - ```echo 'test' > test```
     - ```git add test```
